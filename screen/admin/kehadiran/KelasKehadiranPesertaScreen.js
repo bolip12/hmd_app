@@ -42,12 +42,13 @@ class KelasKehadiranPesertaScreen extends Component {
       });
 
       let kelas_id = this.props.route.params.kelas_id;
+      let kelas_kehadiran_id = this.props.route.params.kelas_kehadiran_id;
       
       //query
       let { data, error, count } = await supabase
-          .from('kelas_peserta')
-          .select('id, peserta_id, peserta:peserta_id (nama)')
-          .eq('kelas_id', kelas_id);
+          .from('kelas_kehadiran_peserta')
+          .select('id, peserta_id, status, peserta:peserta_id (nama)')
+          .eq('kelas_kehadiran_id', kelas_kehadiran_id)
 
       //memasukan respon ke state untuk loop data di render
       this.setState({data:data});
@@ -76,7 +77,7 @@ class KelasKehadiranPesertaScreen extends Component {
                 <List.Item
                   title={item.peserta.nama}
                   left={props => <Badge style={{ backgroundColor: Theme.colors.primary, margin: 10 }} size={40}>{item.peserta.nama.charAt(0)}</Badge>}
-                  right={props => <Checkbox status='checked' onPress={() => this.setState({kehadiranCheck:false})} color={Theme.colors.primary} />}
+                  right={props => <Checkbox status={item.status == true ? 'checked' : 'unchecked'} onPress={() => this.setState({kehadiranCheck:false})} color={Theme.colors.primary} />}
                 />
                 <Divider />
               </View>
