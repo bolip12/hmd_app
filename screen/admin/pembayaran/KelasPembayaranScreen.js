@@ -51,7 +51,8 @@ class KelasPembayaranScreen extends Component {
           .from('kelas_pembayaran')
           .select('id, tanggal, nominal, keterangan')
           .eq('kelas_id', kelas_id)
-          .eq('peserta_id', peserta_id);
+          .eq('peserta_id', peserta_id)
+          .order('tanggal', {ascending:false})
 
 
       //memasukan respon ke state untuk loop data di render
@@ -81,6 +82,7 @@ class KelasPembayaranScreen extends Component {
                   title={dateFormatSupa(item.tanggal)}
                   description={item.keterangan}
                   right={props => <Subheading style={{ marginTop: 10, marginRight: 10, fontWeight:'bold' }} >{thousandFormat(item.nominal)}</Subheading>}
+                  onPress={() => this.props.navigation.navigate('KelasPembayaranUpdateScreen', {docId:item.id})}
                 />
                 <Divider />
               </View>

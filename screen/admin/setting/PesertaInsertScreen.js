@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import { View, ScrollView } from 'react-native'
 import { Provider as PaperProvider, Appbar, IconButton, Headline, Divider, Text, TextInput, HelperText, Button, Portal, Dialog, Title, Subheading, Paragraph, List} from 'react-native-paper';
 import { showMessage } from "react-native-flash-message";
+import ValidationComponent from 'react-native-form-validator';
 
 import supabase from '../../../config/supabase.js';
 import Theme from '../../../config/Theme';
 import styleApp from '../../../config/styleApp.js';
 import store from '../../../config/storeApp';
 
-class PesertaInsertScreen extends Component {
+
+class PesertaInsertScreen extends ValidationComponent {
   constructor(props) {
       super(props);
 
@@ -52,17 +54,19 @@ class PesertaInsertScreen extends Component {
 
 
   async onSubmit() {
-    /*this.validate({
+    this.validate({
       nama: {required:true},
-      telepon: {required:true, minlength:9},
+      telepon: {required:true, minlength:10},
+      universitas: {required:true},
+      jurusan: {required:true},
 
       email: {required:true},
       password: {required:true, minlength:6},
       //passwordConfirm: {required:true, minlength:6, equalPassword : this.state.password},
-    });*/
+    });
 
 
-    /*if(this.isFormValid()) {*/
+    if(this.isFormValid()) {
         store.dispatch({
             type: 'LOADING',
             payload: { isLoading:true }
@@ -115,7 +119,6 @@ class PesertaInsertScreen extends Component {
                               email: email,
                               password: password,
                             }])
-                    console.log(error)
         }
 
           store.dispatch({
@@ -130,7 +133,7 @@ class PesertaInsertScreen extends Component {
           });
 
           this.props.navigation.navigate('PesertaScreen');
-      /*}*/
+      }
     }
 
 
@@ -154,7 +157,7 @@ class PesertaInsertScreen extends Component {
               style={styleApp.TextInput}
               selectionColor={Theme.colors.accent}
             />
-
+            {this.isFieldInError('email') && this.getErrorsInField('email').map(errorMessage => <HelperText type="error">{errorMessage}</HelperText>) }
 
             <TextInput
               label="Password"
@@ -165,6 +168,7 @@ class PesertaInsertScreen extends Component {
               right={<TextInput.Icon icon={this.state.passwordIcon} onPress={() => this.passwordDisplay()} />}
               selectionColor={Theme.colors.accent}
             />
+            {this.isFieldInError('password') && this.getErrorsInField('password').map(errorMessage => <HelperText type="error">{errorMessage}</HelperText>) }
 
           </List.Section>
 
@@ -177,6 +181,7 @@ class PesertaInsertScreen extends Component {
               style={styleApp.TextInput}
               selectionColor={Theme.colors.accent}
             />
+            {this.isFieldInError('nama') && this.getErrorsInField('nama').map(errorMessage => <HelperText type="error">{errorMessage}</HelperText>) }
 
             <TextInput
               label="Telepon/WA"
@@ -186,6 +191,7 @@ class PesertaInsertScreen extends Component {
               selectionColor={Theme.colors.accent}
               style={styleApp.TextInput}
             />
+            {this.isFieldInError('telepon') && this.getErrorsInField('telepon').map(errorMessage => <HelperText type="error">{errorMessage}</HelperText>) }
 
             <TextInput
               label="Universitas"
@@ -194,6 +200,7 @@ class PesertaInsertScreen extends Component {
               style={styleApp.TextInput}
               selectionColor={Theme.colors.accent}
             />
+            {this.isFieldInError('universitas') && this.getErrorsInField('universitas').map(errorMessage => <HelperText type="error">{errorMessage}</HelperText>) }
 
             <TextInput
               label="Jurusan"
@@ -202,6 +209,7 @@ class PesertaInsertScreen extends Component {
               style={styleApp.TextInput}
               selectionColor={Theme.colors.accent}
             />
+            {this.isFieldInError('jurusan') && this.getErrorsInField('jurusan').map(errorMessage => <HelperText type="error">{errorMessage}</HelperText>) }
 
             <TextInput
               label="Alamat"

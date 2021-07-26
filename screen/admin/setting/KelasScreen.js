@@ -43,8 +43,6 @@ class KelasScreen extends Component {
           .from('kelas')
           .select('id, nama, pelatihan:pelatihan_id (nama), status')
 
-
-
       //memasukan respon ke state untuk loop data di render
       this.setState({data:data});
 
@@ -57,7 +55,9 @@ class KelasScreen extends Component {
 
   onRight(item) {
     return(
-      <View>
+      <View style={{ flexDirection: 'row' }}>
+        <IconButton icon='account' size={27} onPress={() => this.props.navigation.navigate('PesertaKelasScreen', {kelas_id:item.id, kelas_nama:item.nama})} />
+
         { item.status == true ?
           <IconButton icon='check-bold' color="green" />
           :

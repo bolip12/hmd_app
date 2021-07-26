@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { View, Alert } from 'react-native';
-import { Provider as PaperProvider, Appbar, Button, TextInput, Portal, Modal, ActivityIndicator, Divider } from 'react-native-paper';
+import { Provider as PaperProvider, Appbar, Button, TextInput, Portal, Modal, ActivityIndicator, Divider, HelperText } from 'react-native-paper';
 import { showMessage } from "react-native-flash-message";
+import ValidationComponent from 'react-native-form-validator';
 
 import supabase from '../../../config/supabase.js';
 import Theme from '../../../config/Theme';
@@ -11,7 +12,7 @@ import DateTimeInput from '../../../component/dateTimeInput.js';
 import thousandFormat from '../../../component/thousandFormat.js';
 import clearThousandFormat from '../../../component/clearThousandFormat.js';
 
-class KelasInsertScreen extends Component {
+class KelasInsertScreen extends ValidationComponent {
 
   constructor(props) {
       super(props);
@@ -67,16 +68,24 @@ class KelasInsertScreen extends Component {
   }
 
   async onSubmit() {    
+    this.validate({
+      pelatihan: {required:true},
+      nama: {required:true},
+      tanggal_mulai: {required:true},
+      biaya: {required:true, numeric:true},
+
+    });
+
+    if(this.isFormValid()) {
       store.dispatch({
-              type: 'LOADING',
-              payload: { isLoading:true }
-          });
+          type: 'LOADING',
+          payload: { isLoading:true }
+      });
 
-          let currTime = new Date();
-          let result = [];
-
+      let currTime = new Date();
       
-      result = await supabase
+
+      let {data:insert_kelas, error} = await supabase
         .from('kelas')
         .insert([{  
                 pelatihan_id: this.state.pelatihanId,
@@ -85,11 +94,28 @@ class KelasInsertScreen extends Component {
                 biaya: clearThousandFormat(this.state.biaya),
                 status: 'true',
               }]);
+      let kelas_id = insert_kelas[0].id;
+
+      let { data:pelatihan_materi } = await supabase
+          .from('pelatihan_materi')
+          .select('id, pertemuan, materi')
+          .eq('pelatihan_id', this.state.pelatihanId)
+
+
+      pelatihan_materi.map(async (doc) => {
+        let {data:insert_kelas_kehadiran} = await supabase
+        .from('kelas_kehadiran')
+        .insert([{  
+            kelas_id: kelas_id,
+            materi: doc.materi,
+            pertemuan: doc.pertemuan,
+          }]);
+      });
 
       //notif
-      if(result.error) {
+      if(error) {
         showMessage({
-              message: result.error.message,
+              message: error.message,
               icon: 'warning',
               backgroundColor: 'red',
               color: Theme.colors.background,
@@ -110,7 +136,7 @@ class KelasInsertScreen extends Component {
 
       this.props.navigation.navigate('KelasScreen');
           
-    
+    }
   }
 
 
@@ -124,7 +150,7 @@ class KelasInsertScreen extends Component {
         <PaperProvider theme={Theme}>
           <Appbar.Header>
             <Appbar.Action icon="arrow-left" onPress={() => this.props.navigation.goBack()} />
-            <Appbar.Content title="Insert Anggota" />
+            <Appbar.Content title="Insert Kelas" />
           </Appbar.Header>
 
           <PickerInput
@@ -136,6 +162,7 @@ class KelasInsertScreen extends Component {
             onChangePickerLabel={label => this.setState({pelatihan: label})}
           />
           <Divider/>
+          {this.isFieldInError('pelatihan') && this.getErrorsInField('pelatihan').map(errorMessage => <HelperText type="error">{errorMessage}</HelperText>) }
 
           <TextInput
             label="Nama"
@@ -143,24 +170,27 @@ class KelasInsertScreen extends Component {
             onChangeText={text => this.setState({nama:text})}
             style={{margin:10}}
           />
+          {this.isFieldInError('nama') && this.getErrorsInField('nama').map(errorMessage => <HelperText type="error">{errorMessage}</HelperText>) }
 
           <DateTimeInput
-              title="Tanggal Kirim"
-              value={this.state.tanggal_mulai}
-              mode="date"
-              minDate={minDate}
-              maxDate={maxDate}
-              onChangeDate={(date) => this.setState({tanggal_mulai:date})}
-            />
-            <Divider style={{ backgroundColor: 'grey', marginHorizontal: 10 }}/>
+            title="Tanggal Kirim"
+            value={this.state.tanggal_mulai}
+            mode="date"
+            minDate={minDate}
+            maxDate={maxDate}
+            onChangeDate={(date) => this.setState({tanggal_mulai:date})}
+          />
+          <Divider style={{ backgroundColor: 'grey', marginHorizontal: 10 }}/>
+        
 
           <TextInput
             label="Biaya"
             value={thousandFormat(this.state.biaya)}
             onChangeText={text => this.setState({biaya:text})}
-            keyboardType="numeric"
+            keyboardType={'numeric'}
             style={{margin:10}}
           />
+          {this.isFieldInError('biaya') && this.getErrorsInField('biaya').map(errorMessage => <HelperText type="error">{errorMessage}</HelperText>) }
 
           <Button
               mode="contained"

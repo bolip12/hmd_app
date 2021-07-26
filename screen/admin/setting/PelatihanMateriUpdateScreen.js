@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { View, Alert } from 'react-native';
-import { Provider as PaperProvider, Appbar, Button, TextInput, Portal, Modal, ActivityIndicator, Divider } from 'react-native-paper';
+import { Provider as PaperProvider, Appbar, Button, TextInput, Portal, Modal, ActivityIndicator, Divider, HelperText} from 'react-native-paper';
 import { showMessage } from "react-native-flash-message";
+import ValidationComponent from 'react-native-form-validator';
 
 import supabase from '../../../config/supabase.js';
 import Theme from '../../../config/Theme';
@@ -11,7 +12,7 @@ import DateTimeInput from '../../../component/dateTimeInput.js';
 import thousandFormat from '../../../component/thousandFormat.js';
 import clearThousandFormat from '../../../component/clearThousandFormat.js';
 
-class PelatihanMateriInsertScreen extends Component {
+class PelatihanMateriInsertScreen extends ValidationComponent {
 
   constructor(props) {
       super(props);
@@ -68,10 +69,18 @@ class PelatihanMateriInsertScreen extends Component {
   }
 
   async onSubmit() {    
+
+    this.validate({
+      pertemuan: {required:true},
+      materi: {required:true},
+
+    });
+
+    if(this.isFormValid()) {
       store.dispatch({
-              type: 'LOADING',
-              payload: { isLoading:true }
-          });
+          type: 'LOADING',
+          payload: { isLoading:true }
+      });
 
       let docId = this.props.route.params.docId;
       let result = [];
@@ -109,7 +118,7 @@ class PelatihanMateriInsertScreen extends Component {
 
       this.props.navigation.navigate('PelatihanMateriScreen');
           
-    
+    }
   }
 
 
@@ -177,9 +186,10 @@ class PelatihanMateriInsertScreen extends Component {
             label="Pertemuan"
             value={thousandFormat(this.state.pertemuan)}
             onChangeText={text => this.setState({pertemuan:text})}
-            keyboardType="numeric"
+            keyboardType={'numeric'}
             style={{margin:10}}
           />
+           {this.isFieldInError('pertemuan') && this.getErrorsInField('pertemuan').map(errorMessage => <HelperText type="error">{errorMessage}</HelperText>) }
 
            <TextInput
             label="Materi"
@@ -187,6 +197,8 @@ class PelatihanMateriInsertScreen extends Component {
             onChangeText={text => this.setState({materi:text})}
             style={{margin:10}}
           />
+          {this.isFieldInError('materi') && this.getErrorsInField('materi').map(errorMessage => <HelperText type="error">{errorMessage}</HelperText>) }
+
 
           <Button
               mode="contained"

@@ -56,7 +56,6 @@ class PesertaResetPasswordScreen extends ValidationComponent {
               email: userEmail,
               password: passwordEksisting,
           })
-      console.log(error)
 
       if(error != null) {
           showMessage({

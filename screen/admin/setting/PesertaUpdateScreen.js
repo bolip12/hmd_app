@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { View, ScrollView } from 'react-native'
 import { Provider as PaperProvider, Appbar, IconButton, Headline, Divider, Text, TextInput, HelperText, Button, Portal, Dialog, Title, Subheading, Paragraph } from 'react-native-paper';
 import { showMessage } from "react-native-flash-message";
+import ValidationComponent from 'react-native-form-validator';
 
 import supabase from '../../../config/supabase.js';
 import Theme from '../../../config/Theme.js';
 import styleApp from '../../../config/styleApp.js';
 import store from '../../../config/storeApp';
 
-class PesertaUpdateScreen extends Component {
+class PesertaUpdateScreen extends ValidationComponent {
   constructor(props) {
       super(props);
 
@@ -64,34 +65,42 @@ class PesertaUpdateScreen extends Component {
 
 
   async onSubmit() {
+    this.validate({
+      nama: {required:true},
+      telepon: {required:true, minlength:10},
+      universitas: {required:true},
+      jurusan: {required:true},
 
-    let docId = this.props.route.params.docId;
+    });
 
-
-    const nama = this.state.nama;
-    const telepon = this.state.telepon;
-    const jurusan = this.state.jurusan;
-    const universitas = this.state.universitas;
-    const alamat = this.state.alamat;
-
-
-    let response = [];
-
+    if(this.isFormValid()) {
       store.dispatch({
           type: 'LOADING',
           payload: { isLoading:true }
       });
 
-     response = await supabase
-      .from('peserta')
-      .update([{
-            nama: nama,
-            telepon: telepon,
-            jurusan: jurusan,
-            universitas: universitas,
-            alamat: alamat,
-          }])
-      .eq('id', docId);
+      let docId = this.props.route.params.docId;
+
+
+      const nama = this.state.nama;
+      const telepon = this.state.telepon;
+      const jurusan = this.state.jurusan;
+      const universitas = this.state.universitas;
+      const alamat = this.state.alamat;
+
+
+      let response = [];
+
+       response = await supabase
+        .from('peserta')
+        .update([{
+              nama: nama,
+              telepon: telepon,
+              jurusan: jurusan,
+              universitas: universitas,
+              alamat: alamat,
+            }])
+        .eq('id', docId);
 
 
       if(response.error) {
@@ -116,7 +125,8 @@ class PesertaUpdateScreen extends Component {
       });
 
       this.props.navigation.navigate('PesertaScreen');
-  }
+    }
+  } 
 
 
   render() {
@@ -130,45 +140,50 @@ class PesertaUpdateScreen extends Component {
         <ScrollView style={styleApp.ScrollView}>
 
           <TextInput
-              label="Nama"
-              value={this.state.nama}
-              onChangeText={text => this.setState({nama: text})}
-              style={styleApp.TextInput}
-              selectionColor={Theme.colors.accent}
-            />
+            label="Nama"
+            value={this.state.nama}
+            onChangeText={text => this.setState({nama: text})}
+            style={styleApp.TextInput}
+            selectionColor={Theme.colors.accent}
+          />
+          {this.isFieldInError('nama') && this.getErrorsInField('nama').map(errorMessage => <HelperText type="error">{errorMessage}</HelperText>) }
 
-            <TextInput
-              label="Telepon/WA"
-              value={this.state.telepon}
-              keyboardType={'numeric'}
-              onChangeText={text => this.setState({telepon: text})}
-              selectionColor={Theme.colors.accent}
-              style={styleApp.TextInput}
-            />
+          <TextInput
+            label="Telepon/WA"
+            value={this.state.telepon}
+            keyboardType={'numeric'}
+            onChangeText={text => this.setState({telepon: text})}
+            selectionColor={Theme.colors.accent}
+            style={styleApp.TextInput}
+          />
+          {this.isFieldInError('telepon') && this.getErrorsInField('telepon').map(errorMessage => <HelperText type="error">{errorMessage}</HelperText>) }
 
-            <TextInput
-              label="Universitas"
-              value={this.state.universitas}
-              onChangeText={text => this.setState({universitas: text})}
-              style={styleApp.TextInput}
-              selectionColor={Theme.colors.accent}
-            />
+          <TextInput
+            label="Universitas"
+            value={this.state.universitas}
+            onChangeText={text => this.setState({universitas: text})}
+            style={styleApp.TextInput}
+            selectionColor={Theme.colors.accent}
+          />
+          {this.isFieldInError('universitas') && this.getErrorsInField('universitas').map(errorMessage => <HelperText type="error">{errorMessage}</HelperText>) }
 
-            <TextInput
-              label="Jurusan"
-              value={this.state.jurusan}
-              onChangeText={text => this.setState({jurusan: text})}
-              style={styleApp.TextInput}
-              selectionColor={Theme.colors.accent}
-            />
+          <TextInput
+            label="Jurusan"
+            value={this.state.jurusan}
+            onChangeText={text => this.setState({jurusan: text})}
+            style={styleApp.TextInput}
+            selectionColor={Theme.colors.accent}
+          />
+          {this.isFieldInError('jurusan') && this.getErrorsInField('jurusan').map(errorMessage => <HelperText type="error">{errorMessage}</HelperText>) }
 
-            <TextInput
-              label="Alamat"
-              value={this.state.alamat}
-              onChangeText={text => this.setState({alamat: text})}
-              style={styleApp.TextInput}
-              selectionColor={Theme.colors.accent}
-            />
+          <TextInput
+            label="Alamat"
+            value={this.state.alamat}
+            onChangeText={text => this.setState({alamat: text})}
+            style={styleApp.TextInput}
+            selectionColor={Theme.colors.accent}
+          />
+          {this.isFieldInError('nama') && this.getErrorsInField('nama').map(errorMessage => <HelperText type="error">{errorMessage}</HelperText>) }
 
         </ScrollView>
 

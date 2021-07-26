@@ -70,7 +70,7 @@ class PembayaranScreen extends Component {
                 <List.Item
                   title={item.nama}
                   description={item.pelatihan.nama}
-                  // left={props => <Badge style={{ backgroundColor: Theme.colors.primary, margin: 10 }} size={35}>{item.nama.charAt(0)}</Badge>}
+                  left={props => <Badge style={{ backgroundColor: Theme.colors.primary, margin: 10 }} size={35}>{item.nama.charAt(0)}</Badge>}
                   right={() => <IconButton icon='arrow-right' />}
                   onPress={() => this.props.navigation.navigate('KelasPesertaScreen', {kelas_id:item.id, kelas_nama:item.nama})}
                 />

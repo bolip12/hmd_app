@@ -28,6 +28,7 @@ import PembayaranScreen from '../screen/admin/pembayaran/PembayaranScreen';
 import KelasPesertaScreen from '../screen/admin/pembayaran/KelasPesertaScreen';
 import KelasPembayaranScreen from '../screen/admin/pembayaran/KelasPembayaranScreen';
 import KelasPembayaranInsertScreen from '../screen/admin/pembayaran/KelasPembayaranInsertScreen';
+import KelasPembayaranUpdateScreen from '../screen/admin/pembayaran/KelasPembayaranUpdateScreen';
 
 //laporan
 import LaporanScreen from '../screen/admin/laporan/LaporanScreen';
@@ -40,6 +41,9 @@ import SettingScreen from '../screen/admin/setting/SettingScreen';
 import KelasScreen from '../screen/admin/setting/KelasScreen';
 import KelasInsertScreen from '../screen/admin/setting/KelasInsertScreen';
 import KelasUpdateScreen from '../screen/admin/setting/KelasUpdateScreen';
+import PesertaKelasScreen from '../screen/admin/setting/PesertaKelasScreen';
+import PesertaKelasInsertScreen from '../screen/admin/setting/PesertaKelasInsertScreen';
+
 
 import PesertaScreen from '../screen/admin/setting/PesertaScreen';
 import PesertaInsertScreen from '../screen/admin/setting/PesertaInsertScreen';
@@ -138,6 +142,12 @@ export default function AdminNav() {
                   component={KelasPembayaranInsertScreen}
                   options={{headerShown:false}}
                 />
+                <Stack.Screen 
+                  name="KelasPembayaranUpdateScreen"
+                  component={KelasPembayaranUpdateScreen}
+                  options={{headerShown:false}}
+                />
+                
 							</Stack.Navigator>
 						)}
 		        </BottomTab.Screen>
@@ -210,6 +220,16 @@ export default function AdminNav() {
 		                <Stack.Screen 
 		                  name="PesertaResetPasswordScreen"
 		                  component={PesertaResetPasswordScreen}
+		                  options={{headerShown:false}}
+		                />
+		                <Stack.Screen 
+		                  name="PesertaKelasScreen"
+		                  component={PesertaKelasScreen}
+		                  options={{headerShown:false}}
+		                />
+		                <Stack.Screen 
+		                  name="PesertaKelasInsertScreen"
+		                  component={PesertaKelasInsertScreen}
 		                  options={{headerShown:false}}
 		                />
 		                

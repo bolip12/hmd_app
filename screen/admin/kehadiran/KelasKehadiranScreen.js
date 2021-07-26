@@ -45,8 +45,8 @@ class KelasPesertaScreen extends Component {
       let { data, error, count } = await supabase
           .from('kelas_kehadiran')
           .select('id, pertemuan, materi, tanggal_kehadiran')
-          .eq('kelas_id', kelas_id);
-
+          .eq('kelas_id', kelas_id)
+          .order('pertemuan', {ascending:true});
 
       //memasukan respon ke state untuk loop data di render
       this.setState({data:data});
@@ -70,7 +70,7 @@ class KelasPesertaScreen extends Component {
   }
 
   onListPeserta(item) {
-    this.props.navigation.navigate('KelasKehadiranPesertaScreen', {kelas_nama:this.props.route.params.kelas_nama, materi:item.materi, docId:item.id});
+    this.props.navigation.navigate('KelasKehadiranPesertaScreen', {kelas_id:this.props.route.params.kelas_id, kelas_nama:this.props.route.params.kelas_nama, materi:item.materi, pertemuan:item.pertemuan, kelas_kehadiran_id:item.id});
   }
 
   render() {

@@ -70,7 +70,7 @@ class KehadiranScreen extends Component {
                 <List.Item
                   title={item.nama}
                   description={item.pelatihan.nama}
-                  //left={props => <Badge style={{ backgroundColor: Theme.colors.primary, margin: 10 }} size={40}>{item.nama.charAt(0)}</Badge>}
+                  left={props => <Badge style={{ backgroundColor: Theme.colors.primary, margin: 10 }} size={40}>{item.nama.charAt(0)}</Badge>}
                   right={() => <IconButton icon='arrow-right' />}
                   onPress={() => this.props.navigation.navigate('KelasKehadiranScreen', {kelas_id:item.id, kelas_nama:item.nama})}
                 />

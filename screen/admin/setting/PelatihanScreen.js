@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { View, ScrollView, FlatList, Alert } from 'react-native';
-import { Provider as PaperProvider, Appbar, List, Portal, Modal, ActivityIndicator, Button, IconButton, Badge, Divider, TextInput} from 'react-native-paper';
+import { Provider as PaperProvider, Appbar, List, Portal, Modal, ActivityIndicator, Button, IconButton, Badge, Divider, TextInput, HelperText} from 'react-native-paper';
 import { showMessage } from "react-native-flash-message";
+import ValidationComponent from 'react-native-form-validator';
 
 import supabase from '../../../config/supabase.js';
 import Theme from '../../../config/Theme';
@@ -9,7 +10,7 @@ import store from '../../../config/storeApp';
 import styleApp from '../../../config/styleApp';
 import FormBottom from '../../../component/formBottom.js';
 
-class PelatihanScreen extends Component {
+class PelatihanScreen extends ValidationComponent {
 
   constructor(props) {
       super(props);
@@ -60,11 +61,16 @@ class PelatihanScreen extends Component {
   }
 
   async onSubmit() {
+    this.validate({
+      nama: {required:true},
+    });
+
+    if(this.isFormValid()) {
 
       store.dispatch({
-              type: 'LOADING',
-              payload: { isLoading:true }
-          });
+          type: 'LOADING',
+          payload: { isLoading:true }
+      });
 
       let response = [];
 
@@ -110,6 +116,7 @@ class PelatihanScreen extends Component {
 
           this.toggleForm();
           this.getData();
+    } 
   }
 
   onDeleteConfirm() {
@@ -217,13 +224,14 @@ class PelatihanScreen extends Component {
               title=""
               display={this.state.formDisplay}
               onToggleForm={status => this.toggleForm()}
-            >
-              <TextInput
-              label="Nama"
-              value={this.state.nama}
-              onChangeText={text => this.setState({nama: text})}
-              style={styleApp.TextInput}
-          />
+          >
+            <TextInput
+                label="Nama"
+                value={this.state.nama}
+                onChangeText={text => this.setState({nama: text})}
+                style={styleApp.TextInput}
+            />
+            {this.isFieldInError('nama') && this.getErrorsInField('nama').map(errorMessage => <HelperText type="error">{errorMessage}</HelperText>) }
 
 
           <Button

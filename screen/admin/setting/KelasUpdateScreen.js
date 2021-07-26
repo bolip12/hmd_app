@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { View, Alert } from 'react-native';
-import { Provider as PaperProvider, Appbar, Button, TextInput, Portal, Modal, ActivityIndicator, Divider } from 'react-native-paper';
+import { Provider as PaperProvider, Appbar, Button, TextInput, Portal, Modal, ActivityIndicator, Divider, HelperText } from 'react-native-paper';
 import { showMessage } from "react-native-flash-message";
+import ValidationComponent from 'react-native-form-validator';
 
 import supabase from '../../../config/supabase.js';
 import Theme from '../../../config/Theme';
@@ -12,7 +13,7 @@ import thousandFormat from '../../../component/thousandFormat.js';
 import dateFilterFormat from '../../../component/dateFilterFormat.js';
 import clearThousandFormat from '../../../component/clearThousandFormat.js';
 
-class KelasUpdateScreen extends Component {
+class KelasUpdateScreen extends ValidationComponent {
 
   constructor(props) {
       super(props);
@@ -97,11 +98,20 @@ class KelasUpdateScreen extends Component {
   }
 
   async onSubmit() {
+    this.validate({
+      pelatihan: {required:true},
+      nama: {required:true},
+      tanggal_mulai: {required:true},
+      biaya: {required:true, numeric:true},
+
+    });
+
+    if(this.isFormValid()) {
     
       store.dispatch({
-              type: 'LOADING',
-              payload: { isLoading:true }
-          });
+        type: 'LOADING',
+        payload: { isLoading:true }
+      });
 
 
       let docId = this.props.route.params.docId;
@@ -144,7 +154,7 @@ class KelasUpdateScreen extends Component {
           });
 
       this.props.navigation.navigate('KelasScreen');
-          
+    }     
   }
 
 
@@ -170,6 +180,7 @@ class KelasUpdateScreen extends Component {
             onChangePickerLabel={label => this.setState({pelatihan: label})}
           />
           <Divider/>
+          {this.isFieldInError('pelatihan') && this.getErrorsInField('pelatihan').map(errorMessage => <HelperText type="error">{errorMessage}</HelperText>) }
 
           <TextInput
             label="Nama"
@@ -177,6 +188,7 @@ class KelasUpdateScreen extends Component {
             onChangeText={text => this.setState({nama:text})}
             style={{margin:10}}
           />
+          {this.isFieldInError('nama') && this.getErrorsInField('nama').map(errorMessage => <HelperText type="error">{errorMessage}</HelperText>) }
 
           <DateTimeInput
               title="Tanggal Kirim"
@@ -195,6 +207,7 @@ class KelasUpdateScreen extends Component {
             keyboardType="numeric"
             style={{margin:10}}
           />
+          {this.isFieldInError('biaya') && this.getErrorsInField('biaya').map(errorMessage => <HelperText type="error">{errorMessage}</HelperText>) }
 
           <Button
               mode="contained"

@@ -11,8 +11,9 @@ import PickerInput from '../../../component/pickerInput';
 import DateTimeInput from '../../../component/dateTimeInput.js';
 import thousandFormat from '../../../component/thousandFormat.js';
 import clearThousandFormat from '../../../component/clearThousandFormat.js';
+import dateFilterFormat from '../../../component/dateFilterFormat.js';
 
-class KelasPembayaranInsertScreen extends ValidationComponent {
+class KelasPembayaranUpdateScreen extends ValidationComponent {
 
   constructor(props) {
       super(props);
@@ -31,6 +32,37 @@ class KelasPembayaranInsertScreen extends ValidationComponent {
       };
   }
 
+  componentDidMount() {
+    this.fetchData();
+
+  }
+
+  async fetchData() {
+    store.dispatch({
+        type: 'LOADING',
+        payload: { isLoading:true }
+    });
+
+    let docId = this.props.route.params.docId;
+
+    let { data, error } = await supabase
+          .from('kelas_pembayaran')
+          .select('id, tanggal, nominal, keterangan')        
+          .eq('id', docId)
+          .single()
+
+    this.setState({
+      tanggal:data.tanggal, 
+      nominal:data.nominal, 
+      keterangan:data.keterangan,
+    });
+
+    store.dispatch({
+        type: 'LOADING',
+        payload: { isLoading:false }
+    });
+  }
+
   async onSubmit() {    
 
     this.validate({
@@ -46,21 +78,22 @@ class KelasPembayaranInsertScreen extends ValidationComponent {
               payload: { isLoading:true }
           });
 
-      let kelas_id = this.props.route.params.kelas_id;
-      let peserta_id = this.props.route.params.peserta_id;
-          
+      let docId = this.props.route.params.docId;
       let result = [];
 
-      
+      let tanggal = dateFilterFormat(this.state.tanggal);
+      let nominal = clearThousandFormat(this.state.nominal);
+
       result = await supabase
         .from('kelas_pembayaran')
-        .insert([{  
-                kelas_id: kelas_id,
-                peserta_id: peserta_id,
-                tanggal: this.state.tanggal,
-                nominal: clearThousandFormat(this.state.nominal),
+        .update([{  
+                tanggal: tanggal,
+                nominal: nominal,
                 keterangan: this.state.keterangan,
-              }]);
+
+              }])
+        .eq('id', docId);
+
 
       //notif
       if(result.error) {
@@ -91,10 +124,10 @@ class KelasPembayaranInsertScreen extends ValidationComponent {
 
 
   render() {
-    let maxDate = new Date();
+    /*let maxDate = new Date();
     maxDate.setDate(maxDate.getDate() + 30);
 
-    let minDate = new Date();
+    let minDate = new Date();*/
 
       return (
         <PaperProvider theme={Theme}>
@@ -105,10 +138,10 @@ class KelasPembayaranInsertScreen extends ValidationComponent {
 
           <DateTimeInput
               title="Tanggal Bayar"
-              value={this.state.tanggal}
+              value={new Date(this.state.tanggal)}
               mode="date"
-              minDate={minDate}
-              maxDate={maxDate}
+              /*minDate={minDate}
+              maxDate={maxDate}*/
               onChangeDate={(date) => this.setState({tanggal:date})}
             />
             <Divider style={{ backgroundColor: 'grey', marginHorizontal: 10 }}/>
@@ -144,4 +177,4 @@ class KelasPembayaranInsertScreen extends ValidationComponent {
   }
 }
 
-export default KelasPembayaranInsertScreen;
+export default KelasPembayaranUpdateScreen;
