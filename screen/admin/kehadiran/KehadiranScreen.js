@@ -11,7 +11,7 @@ class KehadiranScreen extends Component {
   constructor(props) {
       super(props);
 
-      this.state = store.getState();  
+      this.state = store.getState();
         store.subscribe(()=>{
           this.setState(store.getState());
         });
@@ -37,13 +37,13 @@ class KehadiranScreen extends Component {
           type: 'LOADING',
           payload: { isLoading:true }
       });
-      
+
       //query
       let { data, error, count } = await supabase
           .from('kelas')
           .select('id, nama, pelatihan:pelatihan_id (nama), status')
-          
-          
+
+
 
       //memasukan respon ke state untuk loop data di render
       this.setState({data:data});
@@ -54,26 +54,10 @@ class KehadiranScreen extends Component {
       });
   }
 
-
-  /*onRight(item) {
-    return(
-      <View>
-        { item.status == true ?
-          <IconButton icon='check-bold' color={Theme.colors.primary} />
-          :
-          <IconButton icon='close-thick' color="red" />
-
-        }
-      </View>
-
-    )
-  }*/
-
   render() {
       return (
         <PaperProvider theme={Theme}>
           <Appbar.Header>
-            <Appbar.Action icon="arrow-left" onPress={() => this.props.navigation.goBack()} />
             <Appbar.Content title="Kehadiran" />
           </Appbar.Header>
 
@@ -86,8 +70,8 @@ class KehadiranScreen extends Component {
                 <List.Item
                   title={item.nama}
                   description={item.pelatihan.nama}
-                  left={props => <Badge style={{ backgroundColor: Theme.colors.primary, margin: 10 }} size={40}>{item.nama.charAt(0)}</Badge>}
-                  //right={() => this.onRight(item)}
+                  //left={props => <Badge style={{ backgroundColor: Theme.colors.primary, margin: 10 }} size={40}>{item.nama.charAt(0)}</Badge>}
+                  right={() => <IconButton icon='arrow-right' />}
                   onPress={() => this.props.navigation.navigate('KelasKehadiranScreen', {kelas_id:item.id, kelas_nama:item.nama})}
                 />
                 <Divider />

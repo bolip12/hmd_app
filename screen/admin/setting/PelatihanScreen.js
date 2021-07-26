@@ -14,7 +14,7 @@ class PelatihanScreen extends Component {
   constructor(props) {
       super(props);
 
-      this.state = store.getState();  
+      this.state = store.getState();
         store.subscribe(()=>{
           this.setState(store.getState());
         });
@@ -45,12 +45,12 @@ class PelatihanScreen extends Component {
           type: 'LOADING',
           payload: { isLoading:true }
       });
-      
+
       //query
       let { data, error, count } = await supabase
           .from('pelatihan')
           .select('id, nama')
-          
+
       this.setState({data:data});
 
       store.dispatch({
@@ -60,7 +60,7 @@ class PelatihanScreen extends Component {
   }
 
   async onSubmit() {
-    
+
       store.dispatch({
               type: 'LOADING',
               payload: { isLoading:true }
@@ -72,14 +72,14 @@ class PelatihanScreen extends Component {
         if(this.state.docId === '') {
         response = await supabase
           .from('pelatihan')
-          .insert([{  
+          .insert([{
                     nama: this.state.nama,
                   }]);
       //update
       } else {
         response = await supabase
           .from('pelatihan')
-          .update([{  
+          .update([{
                     nama: this.state.nama,
                  }])
           .eq('id', this.state.docId);
@@ -100,7 +100,7 @@ class PelatihanScreen extends Component {
             message: 'Data berhasil disimpan',
             icon: 'success',
             type: 'success',
-          }); 
+          });
       }
 
       store.dispatch({
@@ -148,7 +148,7 @@ class PelatihanScreen extends Component {
           message: 'Data berhasil dihapus',
           icon: 'success',
           type: 'success',
-        }); 
+        });
     }
 
     store.dispatch({
@@ -173,10 +173,9 @@ class PelatihanScreen extends Component {
   onRight(item) {
     return(
       <View style={{ flexDirection: 'row' }}>
-          <IconButton icon='bulletin-board' size={25} onPress={() => this.props.navigation.navigate('PelatihanMateriScreen', {pelatihan_id:item.id})} />
+          <IconButton icon='bulletin-board' size={25} onPress={() => this.props.navigation.navigate('PelatihanMateriScreen', {pelatihan_id:item.id, pelatihan_nama:item.nama})} />
           <IconButton icon='pencil' size={25} onPress={() => this.toggleForm(item)} />
       </View>
-
     )
   }
 
@@ -196,9 +195,9 @@ class PelatihanScreen extends Component {
               <View>
                 <List.Item
                   title={item.nama}
-                  left={props => <Badge style={{ backgroundColor: Theme.colors.primary, margin: 10 }} size={40}>{item.nama.charAt(0)}</Badge>}
+                  left={props => <Badge style={{ backgroundColor: Theme.colors.primary, margin: 10 }} size={35}>{item.nama.charAt(0)}</Badge>}
                   right={() => this.onRight(item)}
-                  onPress={() => this.toggleForm(item)}
+                  onPress={() => this.props.navigation.navigate('PelatihanMateriScreen', {pelatihan_id:item.id, pelatihan_nama:item.nama})}
                 />
                 <Divider />
               </View>
@@ -225,21 +224,21 @@ class PelatihanScreen extends Component {
               onChangeText={text => this.setState({nama: text})}
               style={styleApp.TextInput}
           />
-          
-            
-          <Button 
+
+
+          <Button
             mode="contained"
-            icon="content-save-outline" 
+            icon="content-save-outline"
             onPress={() => this.onSubmit()}
             disabled={this.state.isLoading}
             style={styleApp.Button}
           >
             Save
           </Button>
-          
+
 
           {this.state.docId != '' &&
-          <Button 
+          <Button
               mode="text"
               icon="delete"
               color="grey"

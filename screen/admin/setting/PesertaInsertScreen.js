@@ -12,7 +12,7 @@ class PesertaInsertScreen extends Component {
   constructor(props) {
       super(props);
 
-      this.state = store.getState();  
+      this.state = store.getState();
       store.subscribe(()=>{
         this.setState(store.getState());
       });
@@ -34,7 +34,7 @@ class PesertaInsertScreen extends Component {
         registerSuccess: false,
       };
 
-      
+
   }
 
 
@@ -55,7 +55,7 @@ class PesertaInsertScreen extends Component {
     /*this.validate({
       nama: {required:true},
       telepon: {required:true, minlength:9},
-      
+
       email: {required:true},
       password: {required:true, minlength:6},
       //passwordConfirm: {required:true, minlength:6, equalPassword : this.state.password},
@@ -67,7 +67,7 @@ class PesertaInsertScreen extends Component {
             type: 'LOADING',
             payload: { isLoading:true }
         });
-        
+
         const email = this.state.email;
         const password = this.state.password;
         const nama = this.state.nama;
@@ -76,13 +76,13 @@ class PesertaInsertScreen extends Component {
         const universitas = this.state.universitas;
         const alamat = this.state.alamat;
 
-       
+
         //login process
         const { user, session, error } = await supabase.auth.signUp({
             email: email,
             password: password,
         })
-         
+
         if(error) {
            showMessage({
             message: error.message,
@@ -96,7 +96,7 @@ class PesertaInsertScreen extends Component {
           //insert user
           const insertPeserta = await supabase
                     .from('peserta')
-                    .insert([{  
+                    .insert([{
                               email: email,
                               nama: nama,
                               telepon: telepon,
@@ -106,10 +106,10 @@ class PesertaInsertScreen extends Component {
                             }])
 
           let peserta_id = insertPeserta.body[0].id;
-          
+
           const { insertUsers, error } = await supabase
                     .from('users')
-                    .insert([{  
+                    .insert([{
                               tipe: 'peserta',
                               peserta_id: peserta_id,
                               email: email,
@@ -127,19 +127,19 @@ class PesertaInsertScreen extends Component {
             message: 'Data berhasil disimpan',
             icon: 'success',
             type: 'success',
-          }); 
+          });
 
           this.props.navigation.navigate('PesertaScreen');
       /*}*/
-    }   
+    }
 
 
   render() {
     return (
       <PaperProvider theme={Theme}>
-        <Appbar.Header style={styleApp.Appbar}>
-          <Appbar.BackAction color= {Theme.colors.primary} onPress={() => this.props.navigation.goBack()} />
-          <Appbar.Content title="Tambah Peserta" color= {Theme.colors.primary}/>
+        <Appbar.Header>
+          <Appbar.BackAction onPress={() => this.props.navigation.goBack()} />
+          <Appbar.Content title="Insert Peserta"/>
         </Appbar.Header>
 
         <ScrollView style={styleApp.ScrollView}>
@@ -154,7 +154,7 @@ class PesertaInsertScreen extends Component {
               style={styleApp.TextInput}
               selectionColor={Theme.colors.accent}
             />
-            
+
 
             <TextInput
               label="Password"
@@ -167,15 +167,15 @@ class PesertaInsertScreen extends Component {
             />
 
           </List.Section>
-          
+
         <List.Section>
           <List.Subheader style={{ fontWeight: 'bold' }}>Personal</List.Subheader><Divider />
             <TextInput
               label="Nama"
               value={this.state.nama}
               onChangeText={text => this.setState({nama: text})}
-              style={styleApp.TextInput}   
-              selectionColor={Theme.colors.accent}                                    
+              style={styleApp.TextInput}
+              selectionColor={Theme.colors.accent}
             />
 
             <TextInput
@@ -184,40 +184,40 @@ class PesertaInsertScreen extends Component {
               keyboardType={'numeric'}
               onChangeText={text => this.setState({telepon: text})}
               selectionColor={Theme.colors.accent}
-              style={styleApp.TextInput}             
+              style={styleApp.TextInput}
             />
 
             <TextInput
               label="Universitas"
               value={this.state.universitas}
               onChangeText={text => this.setState({universitas: text})}
-              style={styleApp.TextInput}   
-              selectionColor={Theme.colors.accent}                                    
+              style={styleApp.TextInput}
+              selectionColor={Theme.colors.accent}
             />
 
             <TextInput
               label="Jurusan"
               value={this.state.jurusan}
               onChangeText={text => this.setState({jurusan: text})}
-              style={styleApp.TextInput}   
-              selectionColor={Theme.colors.accent}                                    
+              style={styleApp.TextInput}
+              selectionColor={Theme.colors.accent}
             />
 
             <TextInput
               label="Alamat"
               value={this.state.alamat}
               onChangeText={text => this.setState({alamat: text})}
-              style={styleApp.TextInput}   
-              selectionColor={Theme.colors.accent}                                    
+              style={styleApp.TextInput}
+              selectionColor={Theme.colors.accent}
             />
 
         </List.Section>
 
         </ScrollView>
 
-          <Button 
+          <Button
             mode="contained"
-            icon="content-save-outline" 
+            icon="content-save-outline"
             onPress={() => this.onSubmit()}
             disabled={this.state.isLoading}
             style={styleApp.Button}
@@ -225,7 +225,7 @@ class PesertaInsertScreen extends Component {
             Simpan
           </Button>
 
-        
+
 
       </PaperProvider>
     )

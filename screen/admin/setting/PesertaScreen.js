@@ -12,7 +12,7 @@ class PesertaScreen extends Component {
   constructor(props) {
       super(props);
 
-      this.state = store.getState();  
+      this.state = store.getState();
         store.subscribe(()=>{
           this.setState(store.getState());
         });
@@ -38,12 +38,12 @@ class PesertaScreen extends Component {
           type: 'LOADING',
           payload: { isLoading:true }
       });
-      
+
       //query
       let { data, error, count } = await supabase
           .from('peserta')
           .select('id, nama, email, telepon')
-          
+
 
       //memasukan respon ke state untuk loop data di render
       this.setState({data:data});
@@ -81,7 +81,7 @@ class PesertaScreen extends Component {
                 <List.Item
                   title={item.nama}
                   description={item.email}
-                  left={props => <Badge style={{ backgroundColor: Theme.colors.primary, margin: 10 }} size={40}>{item.nama.charAt(0)}</Badge>}
+                  left={props => <Badge style={{ backgroundColor: Theme.colors.primary, margin: 10 }} size={35}>{item.nama.charAt(0)}</Badge>}
                   right={() => this.onRight(item)}
                   onPress={() => this.props.navigation.navigate('PesertaUpdateScreen', {docId:item.id})}
                 />

@@ -17,19 +17,19 @@ class KelasKehadiranUpdateScreen extends Component {
   constructor(props) {
       super(props);
 
-      this.state = store.getState();  
+      this.state = store.getState();
       store.subscribe(()=>{
         this.setState(store.getState());
       });
 
       this.state = {
         ...this.state,
-        
+
         pertemuan: '',
         materi: '',
         materi_realisasi: '',
         tanggal_kehadiran: new Date(),
-        
+
       };
   }
 
@@ -48,13 +48,13 @@ class KelasKehadiranUpdateScreen extends Component {
 
     let { data, error } = await supabase
           .from('kelas_kehadiran')
-          .select('id, pertemuan, materi, materi_realisasi, tanggal_kehadiran')        
+          .select('id, pertemuan, materi, materi_realisasi, tanggal_kehadiran')
           .eq('id', docId)
           .single()
 
     this.setState({
-      pertemuan:data.pertemuan, 
-      tanggal_kehadiran:data.tanggal_kehadiran, 
+      pertemuan:data.pertemuan,
+      tanggal_kehadiran:data.tanggal_kehadiran,
       materi:data.materi,
       materi_realisasi:data.materi_realisasi,
     });
@@ -66,7 +66,7 @@ class KelasKehadiranUpdateScreen extends Component {
   }
 
   async onSubmit() {
-    
+
       store.dispatch({
               type: 'LOADING',
               payload: { isLoading:true }
@@ -80,10 +80,10 @@ class KelasKehadiranUpdateScreen extends Component {
       let materi_realisasi = this.state.materi_realisasi;
       let pertemuan = this.state.pertemuan;
 
-      
+
       result = await supabase
         .from('kelas_kehadiran')
-        .update([{  
+        .update([{
                 pertemuan: this.state.pertemuan,
                 materi: materi,
                 materi_realisasi: materi_realisasi,
@@ -106,7 +106,7 @@ class KelasKehadiranUpdateScreen extends Component {
               message: 'Data berhasil disimpan',
               icon: 'success',
               type: 'success',
-            }); 
+            });
       }
 
       store.dispatch({
@@ -115,7 +115,7 @@ class KelasKehadiranUpdateScreen extends Component {
           });
 
       this.props.navigation.navigate('KelasKehadiranScreen');
-          
+
   }
 
 
@@ -129,7 +129,7 @@ class KelasKehadiranUpdateScreen extends Component {
         <PaperProvider theme={Theme}>
           <Appbar.Header>
             <Appbar.Action icon="arrow-left" onPress={() => this.props.navigation.goBack()} />
-            <Appbar.Content title="Update Materi & Pertemuan" />
+            <Appbar.Content title="Update Kehadiran" />
           </Appbar.Header>
 
           <TextInput
@@ -158,7 +158,7 @@ class KelasKehadiranUpdateScreen extends Component {
               title="Tanggal Kehadiran"
               value={new Date(this.state.tanggal_kehadiran)}
               mode="date"
-              
+
               onChangeDate={(date) => this.setState({tanggal_kehadiran:date})}
             />
             <Divider style={{ backgroundColor: 'grey', marginHorizontal: 10 }}/>

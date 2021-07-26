@@ -13,7 +13,7 @@ class KelasPembayaranScreen extends Component {
   constructor(props) {
       super(props);
 
-      this.state = store.getState();  
+      this.state = store.getState();
         store.subscribe(()=>{
           this.setState(store.getState());
         });
@@ -45,14 +45,14 @@ class KelasPembayaranScreen extends Component {
 
       let kelas_id = this.props.route.params.kelas_id;
       let peserta_id = this.props.route.params.peserta_id;
-      
+
       //query
       let { data, error, count } = await supabase
           .from('kelas_pembayaran')
           .select('id, tanggal, nominal, keterangan')
           .eq('kelas_id', kelas_id)
           .eq('peserta_id', peserta_id);
-          
+
 
       //memasukan respon ke state untuk loop data di render
       this.setState({data:data});
@@ -68,7 +68,7 @@ class KelasPembayaranScreen extends Component {
         <PaperProvider theme={Theme}>
           <Appbar.Header>
             <Appbar.Action icon="arrow-left" onPress={() => this.props.navigation.goBack()} />
-            <Appbar.Content title={"Pembayaran "+this.props.route.params.peserta_nama} />
+            <Appbar.Content title={this.props.route.params.peserta_nama} subtitle={this.props.route.params.kelas_nama} />
           </Appbar.Header>
 
           <FlatList

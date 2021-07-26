@@ -12,7 +12,7 @@ class KelasPesertaScreen extends Component {
   constructor(props) {
       super(props);
 
-      this.state = store.getState();  
+      this.state = store.getState();
         store.subscribe(()=>{
           this.setState(store.getState());
         });
@@ -40,13 +40,13 @@ class KelasPesertaScreen extends Component {
       });
 
       let kelas_id = this.props.route.params.kelas_id;
-      
+
       //query
       let { data, error, count } = await supabase
           .from('kelas_kehadiran')
           .select('id, pertemuan, materi, tanggal_kehadiran')
           .eq('kelas_id', kelas_id);
-          
+
 
       //memasukan respon ke state untuk loop data di render
       this.setState({data:data});
@@ -57,17 +57,20 @@ class KelasPesertaScreen extends Component {
       });
   }
 
-
   onRight(item) {
     let kelas_id = this.props.route.params.kelas_id;
 
     return(
        <View style={{ flexDirection: 'row' }}>
-          <IconButton icon='account' size={27} onPress={() => this.props.navigation.navigate('KelasKehadiranPesertaScreen', {kelas_id:kelas_id, materi:item.materi, kelas_kehadiran_id:item.id})} />
+          <IconButton icon='account' size={27} onPress={() => this.onListPeserta(item)} />
           <IconButton icon='pencil' size={25} onPress={() => this.props.navigation.navigate('KelasKehadiranUpdateScreen', {docId:item.id})} />
       </View>
 
     )
+  }
+
+  onListPeserta(item) {
+    this.props.navigation.navigate('KelasKehadiranPesertaScreen', {kelas_nama:this.props.route.params.kelas_nama, materi:item.materi, docId:item.id});
   }
 
   render() {
@@ -87,9 +90,9 @@ class KelasPesertaScreen extends Component {
                 <List.Item
                   title={item.materi}
                   description={dateFormatSupa(item.tanggal_kehadiran)}
-                  left={props => <Badge style={{ backgroundColor: Theme.colors.primary, margin: 10 }} size={40}>{item.pertemuan}</Badge>}
+                  left={props => <Badge style={{ backgroundColor: Theme.colors.primary, margin: 10 }} size={35}>{item.pertemuan}</Badge>}
                   right={props => this.onRight(item)}
-                  onPress={() => this.props.navigation.navigate('KelasKehadiranUpdateScreen', {docId:item.id})}
+                  onPress={() => this.onListPeserta(item)}
                 />
                 <Divider />
               </View>

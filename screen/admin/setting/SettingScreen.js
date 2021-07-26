@@ -38,7 +38,7 @@ class SettingScreen extends Component {
               <List.Item
                 key={2}
                 title="Pelatihan"
-                left={props => <List.Icon icon="book-account-outline" />}
+                left={props => <List.Icon icon="book-outline" />}
                 right={props => <List.Icon icon="arrow-right" />}
                 onPress={() => this.props.navigation.navigate('PelatihanScreen')}
               />

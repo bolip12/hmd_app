@@ -11,7 +11,7 @@ class PelatihanMateriScreen extends Component {
   constructor(props) {
       super(props);
 
-      this.state = store.getState();  
+      this.state = store.getState();
         store.subscribe(()=>{
           this.setState(store.getState());
         });
@@ -20,7 +20,7 @@ class PelatihanMateriScreen extends Component {
         ...this.state,
         data: [],
 
-        
+
       };
   }
 
@@ -41,14 +41,14 @@ class PelatihanMateriScreen extends Component {
       });
 
       let pelatihan_id = this.props.route.params.pelatihan_id;
-      
+
       //query
       let { data, error, count } = await supabase
           .from('pelatihan_materi')
           .select('id, materi, pertemuan')
           .eq('pelatihan_id', pelatihan_id)
           .order('pertemuan', { ascending: true })
-          
+
       this.setState({data:data});
 
       store.dispatch({
@@ -63,7 +63,7 @@ class PelatihanMateriScreen extends Component {
         <PaperProvider theme={Theme}>
           <Appbar.Header>
             <Appbar.Action icon="arrow-left" onPress={() => this.props.navigation.goBack()} />
-            <Appbar.Content title="Materi" />
+            <Appbar.Content title="Materi" subtitle={this.props.route.params.pelatihan_nama} />
           </Appbar.Header>
 
           <FlatList
@@ -74,7 +74,7 @@ class PelatihanMateriScreen extends Component {
               <View>
                 <List.Item
                   title={item.materi}
-                  left={props => <Badge style={{ backgroundColor: Theme.colors.primary, margin: 10 }} size={40}>{item.pertemuan}</Badge>}
+                  left={props => <Badge style={{ backgroundColor: Theme.colors.primary, margin: 10 }} size={35}>{item.pertemuan}</Badge>}
                   right={() => <IconButton icon='pencil' size={25} onPress={() => this.props.navigation.navigate('PelatihanMateriUpdateScreen', {docId:item.id})} />}
                   onPress={() => this.props.navigation.navigate('PelatihanMateriUpdateScreen', {docId:item.id})}
                 />

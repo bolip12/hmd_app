@@ -1,5 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import * as React from 'react';
+import { LogBox } from 'react-native';
+
 import FlashMessage from "react-native-flash-message";
 
 //template
@@ -12,8 +14,9 @@ import AdminNav from './navigation/AdminNav';
 
 //storeApp
 import storeApp from './config/storeApp';
-
 import Loading from './component/Loading.js';
+
+LogBox.ignoreAllLogs();
 
 class App extends React.Component {
 	constructor(props) {

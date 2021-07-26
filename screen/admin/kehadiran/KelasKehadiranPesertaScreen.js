@@ -11,7 +11,7 @@ class KelasKehadiranPesertaScreen extends Component {
   constructor(props) {
       super(props);
 
-      this.state = store.getState();  
+      this.state = store.getState();
         store.subscribe(()=>{
           this.setState(store.getState());
         });
@@ -19,7 +19,6 @@ class KelasKehadiranPesertaScreen extends Component {
       this.state = {
         ...this.state,
         data: [],
-
         kehadiranCheck: false,
 
       };
@@ -29,6 +28,7 @@ class KelasKehadiranPesertaScreen extends Component {
       this._unsubscribe = this.props.navigation.addListener('focus', () => {
         this.getData();
       });
+      console.log(this.props.route.params.kelas_nama)
   }
 
   componentWillUnmount() {
@@ -41,14 +41,13 @@ class KelasKehadiranPesertaScreen extends Component {
           payload: { isLoading:true }
       });
 
-      let kelas_id = this.props.route.params.kelas_id;
-      let kelas_kehadiran_id = this.props.route.params.kelas_kehadiran_id;
-      
+      let docId = this.props.route.params.docId;
+
       //query
       let { data, error, count } = await supabase
           .from('kelas_kehadiran_peserta')
           .select('id, peserta_id, status, peserta:peserta_id (nama)')
-          .eq('kelas_kehadiran_id', kelas_kehadiran_id)
+          .eq('kelas_kehadiran_id', docId)
 
       //memasukan respon ke state untuk loop data di render
       this.setState({data:data});
@@ -64,7 +63,7 @@ class KelasKehadiranPesertaScreen extends Component {
         <PaperProvider theme={Theme}>
           <Appbar.Header>
             <Appbar.Action icon="arrow-left" onPress={() => this.props.navigation.goBack()} />
-            <Appbar.Content title={this.props.route.params.materi} />
+            <Appbar.Content title={this.props.route.params.materi} subtitle={this.props.route.params.kelas_nama} />
           </Appbar.Header>
 
           <FlatList

@@ -11,7 +11,7 @@ class KelasScreen extends Component {
   constructor(props) {
       super(props);
 
-      this.state = store.getState();  
+      this.state = store.getState();
         store.subscribe(()=>{
           this.setState(store.getState());
         });
@@ -37,13 +37,13 @@ class KelasScreen extends Component {
           type: 'LOADING',
           payload: { isLoading:true }
       });
-      
+
       //query
       let { data, error, count } = await supabase
           .from('kelas')
           .select('id, nama, pelatihan:pelatihan_id (nama), status')
-          
-          
+
+
 
       //memasukan respon ke state untuk loop data di render
       this.setState({data:data});
@@ -59,10 +59,9 @@ class KelasScreen extends Component {
     return(
       <View>
         { item.status == true ?
-          <IconButton icon='check-bold' color={Theme.colors.primary} />
+          <IconButton icon='check-bold' color="green" />
           :
           <IconButton icon='close-thick' color="red" />
-
         }
       </View>
 
@@ -86,7 +85,7 @@ class KelasScreen extends Component {
                 <List.Item
                   title={item.nama}
                   description={item.pelatihan.nama}
-                  left={props => <Badge style={{ backgroundColor: Theme.colors.primary, margin: 10 }} size={40}>{item.nama.charAt(0)}</Badge>}
+                  left={props => <Badge style={{ backgroundColor: Theme.colors.primary, margin: 10 }} size={35}>{item.nama.charAt(0)}</Badge>}
                   right={() => this.onRight(item)}
                   onPress={() => this.props.navigation.navigate('KelasUpdateScreen', {docId:item.id})}
                 />

@@ -12,7 +12,7 @@ class PesertaUpdateScreen extends Component {
   constructor(props) {
       super(props);
 
-      this.state = store.getState();  
+      this.state = store.getState();
       store.subscribe(()=>{
         this.setState(store.getState());
       });
@@ -44,13 +44,13 @@ class PesertaUpdateScreen extends Component {
 
     let { data, error } = await supabase
           .from('peserta')
-          .select('id, nama, telepon, universitas, jurusan, alamat')        
+          .select('id, nama, telepon, universitas, jurusan, alamat')
           .eq('id', docId)
           .single()
 
     this.setState({
-      nama:data.nama, 
-      universitas:data.universitas, 
+      nama:data.nama,
+      universitas:data.universitas,
       telepon:data.telepon,
       jurusan:data.jurusan,
       alamat:data.alamat,
@@ -67,16 +67,16 @@ class PesertaUpdateScreen extends Component {
 
     let docId = this.props.route.params.docId;
 
-    
+
     const nama = this.state.nama;
     const telepon = this.state.telepon;
     const jurusan = this.state.jurusan;
     const universitas = this.state.universitas;
     const alamat = this.state.alamat;
-    
+
 
     let response = [];
-    
+
       store.dispatch({
           type: 'LOADING',
           payload: { isLoading:true }
@@ -84,7 +84,7 @@ class PesertaUpdateScreen extends Component {
 
      response = await supabase
       .from('peserta')
-      .update([{  
+      .update([{
             nama: nama,
             telepon: telepon,
             jurusan: jurusan,
@@ -107,9 +107,9 @@ class PesertaUpdateScreen extends Component {
           message: 'Data berhasil disimpan',
           icon: 'success',
           type: 'success'
-        }); 
+        });
       }
-    
+
       store.dispatch({
           type: 'LOADING',
           payload: { isLoading:false }
@@ -117,14 +117,14 @@ class PesertaUpdateScreen extends Component {
 
       this.props.navigation.navigate('PesertaScreen');
   }
-  
+
 
   render() {
     return (
       <PaperProvider theme={Theme}>
-        <Appbar.Header style={styleApp.Appbar}>
-          <Appbar.BackAction color= {Theme.colors.primary} onPress={() => this.props.navigation.goBack()} />
-          <Appbar.Content title="Update Peserta" color= {Theme.colors.primary}/>
+        <Appbar.Header>
+          <Appbar.BackAction onPress={() => this.props.navigation.goBack()} />
+          <Appbar.Content title="Update Peserta"/>
         </Appbar.Header>
 
         <ScrollView style={styleApp.ScrollView}>
@@ -133,8 +133,8 @@ class PesertaUpdateScreen extends Component {
               label="Nama"
               value={this.state.nama}
               onChangeText={text => this.setState({nama: text})}
-              style={styleApp.TextInput}   
-              selectionColor={Theme.colors.accent}                                    
+              style={styleApp.TextInput}
+              selectionColor={Theme.colors.accent}
             />
 
             <TextInput
@@ -143,38 +143,38 @@ class PesertaUpdateScreen extends Component {
               keyboardType={'numeric'}
               onChangeText={text => this.setState({telepon: text})}
               selectionColor={Theme.colors.accent}
-              style={styleApp.TextInput}             
+              style={styleApp.TextInput}
             />
 
             <TextInput
               label="Universitas"
               value={this.state.universitas}
               onChangeText={text => this.setState({universitas: text})}
-              style={styleApp.TextInput}   
-              selectionColor={Theme.colors.accent}                                    
+              style={styleApp.TextInput}
+              selectionColor={Theme.colors.accent}
             />
 
             <TextInput
               label="Jurusan"
               value={this.state.jurusan}
               onChangeText={text => this.setState({jurusan: text})}
-              style={styleApp.TextInput}   
-              selectionColor={Theme.colors.accent}                                    
+              style={styleApp.TextInput}
+              selectionColor={Theme.colors.accent}
             />
 
             <TextInput
               label="Alamat"
               value={this.state.alamat}
               onChangeText={text => this.setState({alamat: text})}
-              style={styleApp.TextInput}   
-              selectionColor={Theme.colors.accent}                                    
+              style={styleApp.TextInput}
+              selectionColor={Theme.colors.accent}
             />
 
         </ScrollView>
 
-          <Button 
+          <Button
             mode="contained"
-            icon="content-save-outline" 
+            icon="content-save-outline"
             onPress={() => this.onSubmit()}
             disabled={this.state.isLoading}
             style={styleApp.Button}
