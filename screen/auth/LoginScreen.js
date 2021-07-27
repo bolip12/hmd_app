@@ -21,8 +21,8 @@ class LoginScreen extends Component {
 
       this.state = {
         ...this.state,
-        email: 'alifsasetyaputra@gmail.com',
-        password: '1234567',
+        email: 'kotakbonapp@gmail.com',
+        password: '12345678',
         isLoading: false,
       };
   }
@@ -50,16 +50,24 @@ class LoginScreen extends Component {
         });
 
       } else {
+
+        const { data } = await supabase
+          .from('users')
+          .select('id, tipe, peserta_id')
+          .eq('email', this.state.email)
+          .single();
+
+        store.dispatch({
+            type: 'LOGIN',
+            payload: { isLogin:true, tipe:data.tipe, peserta_id:data.peserta_id }
+        });
+
         showMessage({
             message: 'Berhasil Login',
             type: 'success',
             icon: 'success',
         });
 
-        store.dispatch({
-            type: 'LOGIN',
-            payload: { isLogin:true, user_type:'admin' }
-        });
       }
 
       store.dispatch({

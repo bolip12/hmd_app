@@ -62,10 +62,6 @@ class KelasKehadiranPesertaScreen extends Component {
         .eq('peserta_id', doc.peserta_id)
         .single();
 
-        /*console.log('peserta', doc)
-        console.log('kehadiran', kehadiran)
-        console.log(error);*/
-
         let status = false
         if (kehadiran != null && kehadiran.status == true) {
           status = true

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Dimensions, ScrollView } from 'react-native';
-import { Provider as PaperProvider, Appbar, Subheading, DataTable, Avatar, Portal, Modal, ActivityIndicator } from 'react-native-paper';
+import { View, Dimensions, ScrollView, FlatList } from 'react-native';
+import { Provider as PaperProvider, Appbar, Subheading, ProgressBar, Colors, List, Badge, Divider } from 'react-native-paper';
 import { LineChart } from "react-native-chart-kit";
 
 import supabase from '../../config/supabase';
@@ -20,9 +20,9 @@ class HomeScreen extends Component {
 
       this.state = {
         ...this.state,
-        /*labels: [],
-        datalist: [0],*/
-       
+
+       dataList: [],
+
       }
   }
 
@@ -41,6 +41,16 @@ class HomeScreen extends Component {
           payload: { isLoading:true }
       });
       
+      
+      let { data, error } = await supabase
+        .rpc('total_pertemuan_laporan')
+
+      data.map((doc,row) => {
+        let progress = doc.pertemuan/doc.total_pertemuan;
+        data[row].progress = parseFloat(progress.toFixed(2));
+      })
+      console.log(data)
+      this.setState({dataList:data});
 
       store.dispatch({
           type: 'LOADING',
@@ -52,7 +62,7 @@ class HomeScreen extends Component {
       //update redux
       store.dispatch({
           type: 'LOGIN',
-          payload: { isLogin:false, user_type:'', nim:'', petugas_id:'' }
+          payload: { isLogin:false, tipe:'', peserta_id:'' }
       });
   }
 
@@ -63,6 +73,30 @@ class HomeScreen extends Component {
             <Appbar.Content title="Home" />
             <Appbar.Action icon="power" onPress={() => this.onLogout()} />
           </Appbar.Header>
+
+          <List.Item
+            title='Kelas Pertemuan'
+            
+          />
+          <Divider />
+
+          <FlatList
+            keyboardShouldPersistTaps="handled"
+            data={this.state.dataList}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <View>
+                <List.Item
+                  title={item.kelas_nama}
+                  description={item.pelatihan_nama}
+                  left={props => <Badge style={{ backgroundColor:Theme.colors.primary, margin: 10 }} size={35}>{item.kelas_nama.charAt(0)}</Badge>}
+                  right={() => <Subheading>{item.pertemuan+'/'+item.total_pertemuan}</Subheading>}
+                />
+                <ProgressBar progress={item.progress} color={Theme.colors.primary} style={{ marginHorizontal:10, height:10 }} />
+              </View>
+            )}
+          />
+          
 
         </PaperProvider>
       )

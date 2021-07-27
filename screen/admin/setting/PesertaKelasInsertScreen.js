@@ -78,6 +78,7 @@ class PesertaKelasInsertScreen extends ValidationComponent {
         payload: { isLoading:true }
       });
 
+      let pelatihan_id = this.props.route.params.pelatihan_id;
       let kelas_id = this.props.route.params.kelas_id;
       let pesertaId = this.state.pesertaId;
      
@@ -101,6 +102,7 @@ class PesertaKelasInsertScreen extends ValidationComponent {
         .insert([{ 
                 kelas_id: kelas_id,
                 peserta_id: this.state.pesertaId,
+                pelatihan_id: pelatihan_id,
               }]);
       
         //notif

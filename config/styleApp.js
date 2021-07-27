@@ -51,10 +51,10 @@ export default StyleSheet.create({
     fontSize: 14,
   },
   Subheading: {
-    fontSize: 17, 
+    fontSize: 16, 
     textAlign: 'right',
     fontWeight: 'bold',
-    color: Theme.colors.primary,
+    //color: Theme.colors.primary,
   },
   SubheadingRed: {
     fontSize: 17, 

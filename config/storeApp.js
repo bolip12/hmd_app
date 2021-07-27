@@ -2,8 +2,13 @@ import { createStore } from 'redux'
 
 const defaultState = {
   isLogin: false,
-  user_type: '',
+  tipe: '',
+  peserta_id: '',
+
   isLoading:false,
+
+  kehadiranTabId: '',
+
 };
 
 //rejuicer
@@ -12,11 +17,16 @@ const storeApp = (state = defaultState, action) => {
     case 'LOGIN':
       return {...state,
           isLogin: action.payload.isLogin,
-          user_type: action.payload.user_type,
+          tipe: action.payload.tipe,
+          peserta_id: action.payload.peserta_id,
         };
     case 'LOADING':
       return {...state,
           isLoading: action.payload.isLoading,
+        };
+    case 'KEHADIRANTAB':
+      return {...state,
+          kehadiranTabId: action.payload.kehadiranTabId,
         };
   }
 };

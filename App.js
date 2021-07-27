@@ -11,6 +11,7 @@ import Theme from './config/Theme';
 //navigation
 import AuthNav from './navigation/AuthNav';
 import AdminNav from './navigation/AdminNav';
+import PesertaNav from './navigation/PesertaNav';
 
 //storeApp
 import storeApp from './config/storeApp';
@@ -38,8 +39,8 @@ class App extends React.Component {
 		//sudah login
 		if(this.state.isLogin == true) {
 
-			//login anggota
-			if(this.state.user_type == 'admin') {
+			//login peserta
+			if(this.state.tipe == 'peserta') {
 				return (
 						<PaperProvider theme={Theme}>
 							<AdminNav />
@@ -47,19 +48,18 @@ class App extends React.Component {
 							<FlashMessage position="top" style={{marginTop:30}} />
 						</PaperProvider>
 					)
-			}
 
-			/*//login petugas
+			//login admin
 			} else {
 				return (
 						<PaperProvider theme={Theme}>
-							<PetugasNav />
+							<AdminNav />
 							<Loading />
 							<FlashMessage position="top" style={{marginTop:30}} />
 						</PaperProvider>
 					)
 
-			}*/
+			}
 
 		//belum login
 		} else {

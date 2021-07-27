@@ -71,7 +71,7 @@ class PesertaKelasScreen extends ValidationComponent {
         <PaperProvider theme={Theme}>
           <Appbar.Header>
             <Appbar.Action icon="arrow-left" onPress={() => this.props.navigation.goBack()} />
-            <Appbar.Content title={this.props.route.params.kelas_nama} />
+            <Appbar.Content title={this.props.route.params.kelas_nama} subtitle={this.props.route.params.pelatihan_nama} />
           </Appbar.Header>
 
           <FlatList
@@ -93,7 +93,7 @@ class PesertaKelasScreen extends ValidationComponent {
           <Button
               mode="contained"
               icon="plus"
-              onPress={() => this.props.navigation.navigate('PesertaKelasInsertScreen', {kelas_id:this.props.route.params.kelas_id})}
+              onPress={() => this.props.navigation.navigate('PesertaKelasInsertScreen', {kelas_id:this.props.route.params.kelas_id, pelatihan_id:this.props.route.params.pelatihan_id})}
               style={{margin:10}}
           >
             Tambah

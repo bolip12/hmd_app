@@ -41,7 +41,7 @@ class KelasScreen extends Component {
       //query
       let { data, error, count } = await supabase
           .from('kelas')
-          .select('id, nama, pelatihan:pelatihan_id (nama), status')
+          .select('id, pelatihan_id, nama, pelatihan:pelatihan_id (nama), status')
 
       //memasukan respon ke state untuk loop data di render
       this.setState({data:data});
@@ -56,7 +56,7 @@ class KelasScreen extends Component {
   onRight(item) {
     return(
       <View style={{ flexDirection: 'row' }}>
-        <IconButton icon='account' size={27} onPress={() => this.props.navigation.navigate('PesertaKelasScreen', {kelas_id:item.id, kelas_nama:item.nama})} />
+        <IconButton icon='account' size={27} onPress={() => this.props.navigation.navigate('PesertaKelasScreen', {kelas_id:item.id, pelatihan_id:item.pelatihan_id, kelas_nama:item.nama, pelatihan_nama:item.pelatihan.nama})} />
 
         { item.status == true ?
           <IconButton icon='check-bold' color="green" />
