@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Alert, FlatList } from 'react-native';
-import { Provider as PaperProvider, Appbar, Button, TextInput, Portal, Modal, ActivityIndicator, Divider, HelperText, List, Badge } from 'react-native-paper';
+import { Provider as PaperProvider, Appbar, Button, TextInput, Portal, Modal, ActivityIndicator, Divider, HelperText, List, Badge, IconButton } from 'react-native-paper';
 import { showMessage } from "react-native-flash-message";
 import ValidationComponent from 'react-native-form-validator';
 
@@ -64,7 +64,53 @@ class PesertaKelasScreen extends ValidationComponent {
   }
 
   
+  onDeleteConfirm(id) {
 
+      Alert.alert(
+        "Perhatian",
+        "Data akan dihapus?",
+        [
+          { text: "Batal" },
+          { text: "OK", onPress: () => this.onDelete(id) }
+        ],
+      );
+  }
+
+  async onDelete(id) {
+    store.dispatch({
+            type: 'LOADING',
+            payload: { isLoading:true }
+        });
+
+    let response = await supabase
+            .from('kelas_peserta')
+            .delete()
+            .eq('id', id);
+
+    //notif
+    if(response.error) {
+      showMessage({
+          message: result.error.message,
+          icon: 'warning',
+          backgroundColor: 'red',
+          color: Theme.colors.background,
+        });
+
+    } else {
+      showMessage({
+          message: 'Data berhasil dihapus',
+          icon: 'success',
+          type: 'success',
+        }); 
+    }
+
+    store.dispatch({
+            type: 'LOADING',
+            payload: { isLoading:false }
+        });
+
+    this.fetchData();
+  }
 
   render() {
       return (
@@ -83,6 +129,7 @@ class PesertaKelasScreen extends ValidationComponent {
                 <List.Item
                   title={item.peserta.nama}
                   left={props => <Badge style={{ backgroundColor: Theme.colors.primary, margin: 10 }} size={40}>{item.peserta.nama.charAt(0)}</Badge>}
+                  right={props => <IconButton icon='trash-can-outline' color="grey" onPress={() => this.onDeleteConfirm(item.id)} />}
                   
                 />
                 <Divider />

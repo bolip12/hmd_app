@@ -26,13 +26,14 @@ class HomeScreen extends Component {
       }
   }
 
-  componentDidMount() {
-    this.getData();
-     
+ componentDidMount() {
+      this._unsubscribe = this.props.navigation.addListener('focus', () => {
+        this.getData();
+      });
   }
 
   componentWillUnmount() {
-    
+    this._unsubscribe();
   }
 
   async getData() {
@@ -58,14 +59,36 @@ class HomeScreen extends Component {
       });
   }
 
-  onLogout() {
+  async onLogout() {
+    const { error } = supabase.auth.signOut()
+
+    if(error) {
+      showMessage({
+          message: error.message,
+          icon: 'warning',
+          backgroundColor: 'red',
+          color: theme.colors.background,
+        });
+
+    } else {
+      const updateUser = await supabase
+      //update redux
+      store.dispatch({
+          type: 'LOGIN',
+          payload: { isLogin:false, tipe:'', peserta_id:'' }
+      });
+    }
+
+  }
+
+  /*onLogout() {
       //update redux
       store.dispatch({
           type: 'LOGIN',
           payload: { isLogin:false, tipe:'', peserta_id:'' }
       });
   }
-
+*/
   render() {
       return (
         <PaperProvider theme={Theme}>
