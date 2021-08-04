@@ -36,7 +36,6 @@ class KelasPembayaranInsertScreen extends ValidationComponent {
     this.validate({
       nominal: {required:true, numeric:true},
       tanggal: {required:true},
-      keterangan: {required:true},
 
     });
 

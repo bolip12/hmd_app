@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "hmd",
+    "name": "HMD",
     "slug": "hmd",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon-hmd.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash-hmd1.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -20,13 +20,15 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.academy.hmd",
+      "versionCode": 1,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/adaptive-icon-hmd.png",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon-hmd.png"
     }
   }
 }

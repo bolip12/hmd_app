@@ -43,7 +43,7 @@ class App extends React.Component {
 			if(this.state.tipe == 'peserta') {
 				return (
 						<PaperProvider theme={Theme}>
-							<AdminNav />
+							<PesertaNav />
 							<Loading />
 							<FlashMessage position="top" style={{marginTop:30}} />
 						</PaperProvider>
