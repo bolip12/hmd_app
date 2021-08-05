@@ -173,7 +173,7 @@ class KelasInsertScreen extends ValidationComponent {
           {this.isFieldInError('nama') && this.getErrorsInField('nama').map(errorMessage => <HelperText type="error">{errorMessage}</HelperText>) }
 
           <DateTimeInput
-            title="Tanggal Kirim"
+            title="Tanggal Muulai"
             value={this.state.tanggal_mulai}
             mode="date"
             minDate={minDate}

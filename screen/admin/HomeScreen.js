@@ -50,7 +50,7 @@ class HomeScreen extends Component {
         let progress = doc.pertemuan/doc.total_pertemuan;
         data[row].progress = parseFloat(progress.toFixed(2));
       })
-      console.log(data)
+      
       this.setState({dataList:data});
 
       store.dispatch({

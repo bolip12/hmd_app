@@ -74,8 +74,8 @@ class PembayaranScreen extends Component {
                 <List.Item
                   title={dateFormatSupa(item.tanggal)}
                   description={item.keterangan}
-                  left={props => <Badge style={{ backgroundColor: Theme.colors.primary, margin: 10 }} size={35}>{(index+1)}</Badge>}
-                  right={() => <Subheading style={styleApp.Subheading}>{thousandFormat(item.nominal)}</Subheading>}
+                  left={props => <Badge style={{ backgroundColor: Theme.colors.primary, margin: 8 }} size={35}>{(index+1)}</Badge>}
+                  right={() => <Subheading style={{ marginTop:10, fontWeight:'bold' }}>{thousandFormat(item.nominal)}</Subheading>}
                 />
                 <Divider />
               </View>

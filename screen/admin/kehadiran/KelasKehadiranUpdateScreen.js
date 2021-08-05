@@ -169,7 +169,8 @@ class KelasKehadiranUpdateScreen extends ValidationComponent {
               title="Tanggal Kehadiran"
               value={new Date(this.state.tanggal_kehadiran)}
               mode="date"
-
+              minDate={minDate}
+              maxDate={maxDate}
               onChangeDate={(date) => this.setState({tanggal_kehadiran:date})}
             />
             <Divider style={{ backgroundColor: 'grey', marginHorizontal: 10 }}/>
