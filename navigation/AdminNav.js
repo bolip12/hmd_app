@@ -78,7 +78,7 @@ export default function AdminNav() {
 
 						
 						<BottomTab.Screen 
-							name="KehadiranScreen"
+							name="Kehadiran"
 							options={{
 								tabBarLabel: 'Kehadiran',
 								tabBarIcon: ({color}) => (<MaterialCommunityIcons name="clipboard-check-outline" color={color} size={25} />)
@@ -114,7 +114,7 @@ export default function AdminNav() {
 
 		      	
 						<BottomTab.Screen 
-							name="PembayaranScreen"
+							name="Pembayaran"
 							options={{
 								tabBarLabel: 'Pembayaran',
 								tabBarIcon: ({color}) => (<MaterialCommunityIcons name="credit-card-outline" color={color} size={25} />)
@@ -154,7 +154,7 @@ export default function AdminNav() {
 
 	        	{/*tab setting*/}
 	        	<BottomTab.Screen 
-									name="SettingScreen"
+									name="Setting"
 									options={{
 										tabBarLabel: 'Setting',
 										tabBarIcon: ({color}) => (<MaterialCommunityIcons name="cog" color={color} size={25} />)
