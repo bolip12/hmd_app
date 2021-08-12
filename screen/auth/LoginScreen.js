@@ -34,7 +34,7 @@ class LoginScreen extends ValidationComponent {
   async componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPress);
     this.defaultValue();
-     
+
   }
 
   onBackButtonPress = () => {
@@ -44,7 +44,7 @@ class LoginScreen extends ValidationComponent {
   async defaultValue() {
 
     let loginEmail = await AsyncStorage.getItem('@loginEmail');
-    
+
     this.setState({ email:loginEmail });
 
     let loginPassword = await AsyncStorage.getItem('@loginPassword');
@@ -72,7 +72,7 @@ class LoginScreen extends ValidationComponent {
         email: this.state.email,
         password: this.state.password,
       })
-      
+
       if(error != null) {
         showMessage({
             message: error.message,
