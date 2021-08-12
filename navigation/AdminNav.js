@@ -30,12 +30,6 @@ import KelasPembayaranScreen from '../screen/admin/pembayaran/KelasPembayaranScr
 import KelasPembayaranInsertScreen from '../screen/admin/pembayaran/KelasPembayaranInsertScreen';
 import KelasPembayaranUpdateScreen from '../screen/admin/pembayaran/KelasPembayaranUpdateScreen';
 
-//laporan
-import LaporanScreen from '../screen/admin/laporan/LaporanScreen';
-import ChartPieScreen from '../screen/admin/laporan/ChartPieScreen';
-import ReportSummaryScreen from '../screen/admin/laporan/ReportSummaryScreen';
-import ReportDetailScreen from '../screen/admin/laporan/ReportDetailScreen';
-
 //screen setting: single table
 import SettingScreen from '../screen/admin/setting/SettingScreen';
 import KelasScreen from '../screen/admin/setting/KelasScreen';
@@ -63,11 +57,11 @@ export default function AdminNav() {
 	      	<BottomTab.Navigator
 	      		activeColor="black"
 	          	inactiveColor="grey"
-	          	barStyle={{backgroundColor:Theme.colors.primary}} 
+	          	barStyle={{backgroundColor:Theme.colors.primary}}
 	          	shifting={false}
-	        >	
-	        	
-	        	<BottomTab.Screen 
+	        >
+
+	        	<BottomTab.Screen
 							name="Home"
 							component={HomeScreen}
 							options={{
@@ -76,8 +70,8 @@ export default function AdminNav() {
 							}}
 						/>
 
-						
-						<BottomTab.Screen 
+
+						<BottomTab.Screen
 							name="KehadiranScreen"
 							options={{
 								tabBarLabel: 'Kehadiran',
@@ -86,34 +80,34 @@ export default function AdminNav() {
 						>
 						{() => (
 		              	<Stack.Navigator>
-				                <Stack.Screen 
+				                <Stack.Screen
 				                  name="KehadiranScreen"
 				                  component={KehadiranScreen}
 				                  options={{headerShown:false}}
 				                />
-				                <Stack.Screen 
+				                <Stack.Screen
 				                  name="KelasKehadiranScreen"
 				                  component={KelasKehadiranScreen}
 				                  options={{headerShown:false}}
 				                />
-				                <Stack.Screen 
+				                <Stack.Screen
 				                  name="KelasKehadiranUpdateScreen"
 				                  component={KelasKehadiranUpdateScreen}
 				                  options={{headerShown:false}}
 				                />
-				                <Stack.Screen 
+				                <Stack.Screen
 				                  name="KelasKehadiranPesertaScreen"
 				                  component={KelasKehadiranPesertaScreen}
 				                  options={{headerShown:false}}
 				                />
-				                
-				                
+
+
 										</Stack.Navigator>
 						)}
 		        </BottomTab.Screen>
 
-		      	
-						<BottomTab.Screen 
+
+						<BottomTab.Screen
 							name="PembayaranScreen"
 							options={{
 								tabBarLabel: 'Pembayaran',
@@ -122,38 +116,38 @@ export default function AdminNav() {
 						>
 						{() => (
           		<Stack.Navigator>
-                <Stack.Screen 
+                <Stack.Screen
                   name="PembayaranScreen"
                   component={PembayaranScreen}
                   options={{headerShown:false}}
                 />
-                <Stack.Screen 
+                <Stack.Screen
                   name="KelasPesertaScreen"
                   component={KelasPesertaScreen}
                   options={{headerShown:false}}
                 />
-                <Stack.Screen 
+                <Stack.Screen
                   name="KelasPembayaranScreen"
                   component={KelasPembayaranScreen}
                   options={{headerShown:false}}
                 />
-                <Stack.Screen 
+                <Stack.Screen
                   name="KelasPembayaranInsertScreen"
                   component={KelasPembayaranInsertScreen}
                   options={{headerShown:false}}
                 />
-                <Stack.Screen 
+                <Stack.Screen
                   name="KelasPembayaranUpdateScreen"
                   component={KelasPembayaranUpdateScreen}
                   options={{headerShown:false}}
                 />
-                
+
 							</Stack.Navigator>
 						)}
 		        </BottomTab.Screen>
 
 	        	{/*tab setting*/}
-	        	<BottomTab.Screen 
+	        	<BottomTab.Screen
 									name="SettingScreen"
 									options={{
 										tabBarLabel: 'Setting',
@@ -162,77 +156,77 @@ export default function AdminNav() {
 								>
 								{() => (
               		<Stack.Navigator>
-              			<Stack.Screen 
+              			<Stack.Screen
 		                  name="SettingScreen"
 		                  component={SettingScreen}
 		                  options={{headerShown:false}}
 		                />
-		                <Stack.Screen 
+		                <Stack.Screen
 		                  name="KelasScreen"
 		                  component={KelasScreen}
 		                  options={{headerShown:false}}
 		                />
-		                <Stack.Screen 
+		                <Stack.Screen
 		                  name="KelasInsertScreen"
 		                  component={KelasInsertScreen}
-		                  options={{headerShown:false}} 
+		                  options={{headerShown:false}}
 		                />
-		                <Stack.Screen 
+		                <Stack.Screen
 		                  name="KelasUpdateScreen"
 		                  component={KelasUpdateScreen}
 		                  options={{headerShown:false}}
 		                />
-		                <Stack.Screen 
+		                <Stack.Screen
 		                  name="PelatihanScreen"
 		                  component={PelatihanScreen}
 		                  options={{headerShown:false}}
 		                />
-		                <Stack.Screen 
+		                <Stack.Screen
 		                  name="PelatihanMateriScreen"
 		                  component={PelatihanMateriScreen}
 		                  options={{headerShown:false}}
 		                />
-		                <Stack.Screen 
+		                <Stack.Screen
 		                  name="PelatihanMateriInsertScreen"
 		                  component={PelatihanMateriInsertScreen}
 		                  options={{headerShown:false}}
 		                />
-		                <Stack.Screen 
+		                <Stack.Screen
 		                  name="PelatihanMateriUpdateScreen"
 		                  component={PelatihanMateriUpdateScreen}
 		                  options={{headerShown:false}}
 		                />
-		                <Stack.Screen 
+		                <Stack.Screen
 		                  name="PesertaScreen"
 		                  component={PesertaScreen}
 		                  options={{headerShown:false}}
 		                />
-		                <Stack.Screen 
+		                <Stack.Screen
 		                  name="PesertaInsertScreen"
 		                  component={PesertaInsertScreen}
 		                  options={{headerShown:false}}
 		                />
-		                <Stack.Screen 
+		                <Stack.Screen
 		                  name="PesertaUpdateScreen"
 		                  component={PesertaUpdateScreen}
 		                  options={{headerShown:false}}
 		                />
-		                <Stack.Screen 
+		                <Stack.Screen
 		                  name="PesertaResetPasswordScreen"
 		                  component={PesertaResetPasswordScreen}
 		                  options={{headerShown:false}}
 		                />
-		                <Stack.Screen 
+		                <Stack.Screen
 		                  name="PesertaKelasScreen"
 		                  component={PesertaKelasScreen}
 		                  options={{headerShown:false}}
 		                />
-		                <Stack.Screen 
+		                <Stack.Screen
 		                  name="PesertaKelasInsertScreen"
 		                  component={PesertaKelasInsertScreen}
 		                  options={{headerShown:false}}
 		                />
-		                
+
 									</Stack.Navigator>
 								)}
           </BottomTab.Screen>
