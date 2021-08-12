@@ -114,6 +114,7 @@ class HomeScreen extends Component {
                   description={item.pelatihan_nama}
                   left={props => <Badge style={{ backgroundColor:Theme.colors.primary, margin: 10 }} size={35}>{item.kelas_nama.charAt(0)}</Badge>}
                   right={() => <Subheading>{item.pertemuan+'/'+item.total_pertemuan}</Subheading>}
+                  onPress={() => this.props.navigation.navigate('Kehadiran', { screen: 'KelasKehadiranScreen', params: { kelas_id:item.kelas_id, kelas_nama:item.kelas_nama  } } )}
                 />
                 <ProgressBar progress={item.progress} color={Theme.colors.primary} style={{ marginHorizontal:10, height:10 }} />
               </View>

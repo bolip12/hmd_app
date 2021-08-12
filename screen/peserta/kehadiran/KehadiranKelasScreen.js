@@ -83,7 +83,7 @@ class KehadiranKelasScreen extends Component {
       return (
         <PaperProvider theme={Theme}>
           <Appbar.Header>
-            <Appbar.Action icon="arrow-left" onPress={() => this.props.navigation.goBack()} />
+            <Appbar.Action icon="arrow-left" onPress={() => this.props.navigation.navigate('KehadiranScreen')} />
             <Appbar.Content title="Kehadiran" />
           </Appbar.Header>
 

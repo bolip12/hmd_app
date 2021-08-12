@@ -80,7 +80,6 @@ class HomeScreen extends Component {
       });
   }
 
-  
   render() {
       return (
         <PaperProvider theme={Theme}>
@@ -107,8 +106,8 @@ class HomeScreen extends Component {
                   description={item.kelas.nama}
                   left={props => <Badge style={{ backgroundColor: Theme.colors.primary, margin: 10 }} size={35}>{item.pelatihan.nama.charAt(0)}</Badge>}
                   right={() => <IconButton icon='arrow-right-circle-outline' />}
-                  //onPress={() => this.goToKehadiranTab(item.id)}
-                  onPress={() => this.props.navigation.navigate('KehadiranKelasScreen', {kelas_id:item.kelas_id})}
+                  //onPress={() => this.goToKehadiranTab(item.kelas_id)}
+                  onPress={() => this.props.navigation.navigate('Kehadiran', { screen: 'KehadiranKelasScreen', params: { kelas_id:item.kelas_id } } )}
                 />
                 <Divider />
               </View>
