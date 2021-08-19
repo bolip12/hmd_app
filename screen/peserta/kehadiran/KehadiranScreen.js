@@ -44,7 +44,8 @@ class KehadiranScreen extends Component {
           .from('kelas_peserta')
           .select('id, kelas_id, kelas:kelas_id (nama), pelatihan:pelatihan_id (nama)')
           .eq('peserta_id', this.state.peserta_id)
-          
+          .order('tanggal_mulai', {foreignTable: 'kelas'})
+
     this.setState({data:data});
 
       store.dispatch({

@@ -100,7 +100,7 @@ class KelasInsertScreen extends ValidationComponent {
           .from('pelatihan_materi')
           .select('id, pertemuan, materi')
           .eq('pelatihan_id', this.state.pelatihanId)
-
+          .order('pertemuan', { ascending: false })
 
       pelatihan_materi.map(async (doc) => {
         let {data:insert_kelas_kehadiran} = await supabase

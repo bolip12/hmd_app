@@ -47,7 +47,7 @@ class KehadiranKelasScreen extends Component {
           .from('kelas_kehadiran')
           .select('id, pertemuan, materi, materi_realisasi, tanggal_kehadiran')
           .eq('kelas_id', kelas_id)
-
+          .order('pertemuan', { ascending:true })
 
     kelas_kehadiran.map(async (doc, row) => {
       let {data:kehadiran, error} = await supabase

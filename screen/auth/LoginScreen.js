@@ -32,6 +32,11 @@ class LoginScreen extends ValidationComponent {
   }
 
   async componentDidMount() {
+    // const { user, session, error } = await supabase.auth.signUp({
+    //   email: 'rahmatoktavian@gmail.com',
+    //   password: 'Merkili!123',
+    // })
+
     BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPress);
     this.defaultValue();
 
