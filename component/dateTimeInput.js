@@ -59,13 +59,11 @@ class dateTimeInput extends React.Component {
 
 				{this.state.display && (
 		        <DateTimePicker
-					value={this.props.value}
-					mode={this.props.mode}
-					display="calendar"
-					is24Hour={true}
-					onChange={(event,date) => this.onSelect(date)}
-					minimumDate={minDate}
-					maximumDate={maxDate}
+							value={this.props.value}
+							mode={this.props.mode}
+							display="calendar"
+							is24Hour={true}
+							onChange={(event,date) => this.onSelect(date)}
 		        />
 		        )}
 	        </View>
