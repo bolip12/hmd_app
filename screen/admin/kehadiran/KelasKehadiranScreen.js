@@ -62,7 +62,12 @@ class KelasPesertaScreen extends Component {
 
     return(
        <View style={{ flexDirection: 'row' }}>
-          <IconButton icon='account' size={27} onPress={() => this.onListPeserta(item)} />
+          { item.tanggal_kehadiran != null ?
+            <IconButton icon='check-circle-outline' size={27} color='green' />
+            :
+            <IconButton icon='timer-sand' size={27} color='grey' />
+          }
+
           <IconButton icon='pencil' size={25} onPress={() => this.props.navigation.navigate('KelasKehadiranUpdateScreen', {docId:item.id})} />
       </View>
 

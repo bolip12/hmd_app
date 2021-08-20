@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon-hmd.png",
     "splash": {
-      "image": "./assets/splash-hmd1.png",
+      "image": "./assets/splash-hmd.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

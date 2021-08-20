@@ -151,6 +151,7 @@ class KelasKehadiranPesertaScreen extends Component {
                   title={item.peserta_nama}
                   left={props => <Badge style={{ backgroundColor: Theme.colors.primary, margin: 10 }} size={40}>{item.peserta_nama.charAt(0)}</Badge>}
                   right={props => <Checkbox status={item.status == true ? 'checked' : 'unchecked'} onPress={() => this.onCheck(item.peserta_id, item.status)} color={Theme.colors.primary} />}
+                  onPress={() => this.onCheck(item.peserta_id, item.status)}
                 />
                 <Divider />
               </View>

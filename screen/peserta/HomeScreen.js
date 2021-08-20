@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { View, Dimensions, ScrollView, FlatList} from 'react-native';
-import { Provider as PaperProvider, Appbar, Subheading, Title, Headline, Modal, Divider, List, Badge, IconButton} from 'react-native-paper';
+import { Provider as PaperProvider, Appbar, Subheading, Title, Headline, Modal, Divider, List, Badge, IconButton, Menu } from 'react-native-paper';
 import { LineChart } from "react-native-chart-kit";
 
 import supabase from '../../config/supabase';
 import Theme from '../../config/Theme';
 import store from '../../config/storeApp';
 import styleApp from '../../config/styleApp';
+
+const windowWidth = Dimensions.get('window').width;
 
 class HomeScreen extends Component {
 
@@ -22,6 +24,8 @@ class HomeScreen extends Component {
       this.state = {
         ...this.state,
        data: [],
+
+       openMenu: false,
        
       }
   }
@@ -80,13 +84,30 @@ class HomeScreen extends Component {
       });
   }
 
+  onMenuToggle() {
+      this.setState({ openMenu: !this.state.openMenu });
+  }
+
+
+
+
   render() {
       return (
         <PaperProvider theme={Theme}>
           <Appbar.Header>
             <Appbar.Content title="Home" />
-            <Appbar.Action icon="power" onPress={() => this.onLogout()} />
+            <Appbar.Action icon="dots-vertical" onPress={() => this.onMenuToggle()} />
           </Appbar.Header>
+
+            <Menu
+                visible={this.state.openMenu}
+                onDismiss={() => this.onMenuToggle()}
+                anchor={{ x:windowWidth, y:50 }}
+            >
+                <Menu.Item icon="account-key-outline" title="Reset Password" onPress={() => this.props.navigation.navigate('ResetPasswordScreen', {email:this.state.email})} />
+
+                <Menu.Item icon="logout" title="Logout" onPress={() => this.onLogout()} />
+            </Menu>
 
             <View style={{ justifyContent: 'center', alignItems:'center', marginVertical:10}}>
               <Title>{this.state.nama}</Title>

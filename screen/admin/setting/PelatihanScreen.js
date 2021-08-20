@@ -8,7 +8,9 @@ import supabase from '../../../config/supabase.js';
 import Theme from '../../../config/Theme';
 import store from '../../../config/storeApp';
 import styleApp from '../../../config/styleApp';
-import FormBottom from '../../../component/formBottom.js';
+import FormBottom from '../../../component/formBottomSheet.js';
+import thousandFormat from '../../../component/thousandFormat.js';
+import clearThousandFormat from '../../../component/clearThousandFormat.js';
 
 class PelatihanScreen extends ValidationComponent {
 
@@ -25,6 +27,7 @@ class PelatihanScreen extends ValidationComponent {
         data: [],
 
         nama: '',
+        total_pertemuan:'',
         formDisplay: false,
 
 
@@ -50,7 +53,7 @@ class PelatihanScreen extends ValidationComponent {
       //query
       let { data, error, count } = await supabase
           .from('pelatihan')
-          .select('id, nama')
+          .select('id, nama, total_pertemuan')
 
       this.setState({data:data});
 
@@ -63,6 +66,7 @@ class PelatihanScreen extends ValidationComponent {
   async onSubmit() {
     this.validate({
       nama: {required:true},
+      total_pertemuan: {required:true},
     });
 
     if(this.isFormValid()) {
@@ -80,6 +84,7 @@ class PelatihanScreen extends ValidationComponent {
           .from('pelatihan')
           .insert([{
                     nama: this.state.nama,
+                    total_pertemuan: clearThousandFormat(this.state.total_pertemuan),
                   }]);
       //update
       } else {
@@ -87,6 +92,7 @@ class PelatihanScreen extends ValidationComponent {
           .from('pelatihan')
           .update([{
                     nama: this.state.nama,
+                    total_pertemuan: clearThousandFormat(this.state.total_pertemuan),
                  }])
           .eq('id', this.state.docId);
 
@@ -170,9 +176,9 @@ class PelatihanScreen extends ValidationComponent {
   toggleForm(item) {
       this.setState({formDisplay: !this.state.formDisplay});
       if(item) {
-        this.setState({docId:item.id, nama:item.nama});
+        this.setState({docId:item.id, nama:item.nama, total_pertemuan:item.total_pertemuan});
       } else {
-        this.setState({docId:'', nama:''});
+        this.setState({docId:'', nama:'', total_pertemuan:''});
       }
 
   }
@@ -232,6 +238,15 @@ class PelatihanScreen extends ValidationComponent {
                 style={styleApp.TextInput}
             />
             {this.isFieldInError('nama') && this.getErrorsInField('nama').map(errorMessage => <HelperText type="error">{errorMessage}</HelperText>) }
+
+            <TextInput
+                label="Total Pertemuan"
+                value={thousandFormat(this.state.total_pertemuan)}
+                onChangeText={text => this.setState({total_pertemuan: text})}
+                keyboardType={'numeric'}
+                style={styleApp.TextInput}
+            />
+            {this.isFieldInError('total_pertemuan') && this.getErrorsInField('total_pertemuan').map(errorMessage => <HelperText type="error">{errorMessage}</HelperText>) }
 
 
           <Button

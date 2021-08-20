@@ -69,13 +69,23 @@ class KehadiranKelasScreen extends Component {
   }
 
   onRight(item) {
+    let iconStatus = '';
+    let iconColor = '';
+    
+    if(item.status == true) {
+      iconStatus = 'check-circle-outline';
+      iconColor = 'green';
+    } else if(item.status == false ) {
+      iconStatus = 'close-circle-outline';
+      iconColor = 'red';
+    } else {
+      iconStatus = 'timer-sand';
+      iconColor = 'grey';
+    }
+
     return(
       <View>
-        {item.status == true ?
-          <IconButton icon='check-circle-outline' size={28} color='green'/>
-        :
-          <IconButton icon='close-circle-outline' size={28} color='red' />
-        }
+          <IconButton icon={iconStatus} size={28} color={iconColor}/>
       </View>
     )
   }

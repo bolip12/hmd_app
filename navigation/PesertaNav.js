@@ -16,6 +16,7 @@ import Theme from '../config/Theme';
 
 //home
 import HomeScreen from '../screen/peserta/HomeScreen';
+import ResetPasswordScreen from '../screen/peserta/ResetPasswordScreen';
 
 //kehadiran
 import KehadiranScreen from '../screen/peserta/kehadiran/KehadiranScreen';
@@ -39,12 +40,27 @@ export default function PesertaNav() {
 	        	
 	        	<BottomTab.Screen 
 							name="Home"
-							component={HomeScreen}
 							options={{
 								tabBarLabel: 'Home',
 								tabBarIcon: ({color}) => (<MaterialCommunityIcons name="home" color={color} size={25} />)
 							}}
-						/>
+						>
+						{() => (
+		              	<Stack.Navigator>
+				                <Stack.Screen 
+				                  name="HomeScreen"
+				                  component={HomeScreen}
+				                  options={{headerShown:false}}
+				                />
+				                <Stack.Screen 
+				                  name="ResetPasswordScreen"
+				                  component={ResetPasswordScreen}
+				                  options={{headerShown:false}}
+				                />
+				                
+										</Stack.Navigator>
+						)}
+		        </BottomTab.Screen>
 
 						
 						<BottomTab.Screen 
