@@ -29,7 +29,7 @@ class KelasKehadiranUpdateScreen extends ValidationComponent {
         pertemuan: '',
         materi: '',
         materi_realisasi: '',
-        tanggal_kehadiran: new Date(),
+        tanggal_kehadiran: '',
 
       };
   }
@@ -55,7 +55,7 @@ class KelasKehadiranUpdateScreen extends ValidationComponent {
 
     this.setState({
       pertemuan:data.pertemuan,
-      tanggal_kehadiran:data.tanggal_kehadiran,
+      tanggal_kehadiran: data.tanggal_kehadiran != null ? new Date(data.tanggal_kehadiran) : new Date(),
       materi:data.materi,
       materi_realisasi:data.materi_realisasi,
     });
@@ -146,7 +146,9 @@ class KelasKehadiranUpdateScreen extends ValidationComponent {
             onChangeText={text => this.setState({pertemuan:text})}
             keyboardType="numeric"
             style={{margin:10}}
+            disabled
           />
+          <Divider style={{ backgroundColor: 'grey', marginHorizontal: 10 }}/>
           {this.isFieldInError('pertemuan') && this.getErrorsInField('pertemuan').map(errorMessage => <HelperText type="error">{errorMessage}</HelperText>) }
 
           <TextInput
@@ -154,20 +156,23 @@ class KelasKehadiranUpdateScreen extends ValidationComponent {
             value={this.state.materi}
             onChangeText={text => this.setState({materi:text})}
             style={{margin:10}}
+            disabled
           />
+          <Divider style={{ backgroundColor: 'grey', marginHorizontal: 10 }}/>
           {this.isFieldInError('materi') && this.getErrorsInField('materi').map(errorMessage => <HelperText type="error">{errorMessage}</HelperText>) }
 
            <TextInput
             label="Materi Realisasi"
             value={this.state.materi_realisasi}
             onChangeText={text => this.setState({materi_realisasi:text})}
+
             style={{margin:10}}
           />
           {this.isFieldInError('materi_realisasi') && this.getErrorsInField('materi_realisasi').map(errorMessage => <HelperText type="error">{errorMessage}</HelperText>) }
 
           <DateTimeInput
               title="Tanggal Kehadiran"
-              value={new Date(this.state.tanggal_kehadiran)}
+              value={this.state.tanggal_kehadiran}
               mode="date"
               minDate={minDate}
               maxDate={maxDate}
