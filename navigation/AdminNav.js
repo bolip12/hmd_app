@@ -29,6 +29,7 @@ import KelasPesertaScreen from '../screen/admin/pembayaran/KelasPesertaScreen';
 import KelasPembayaranScreen from '../screen/admin/pembayaran/KelasPembayaranScreen';
 import KelasPembayaranInsertScreen from '../screen/admin/pembayaran/KelasPembayaranInsertScreen';
 import KelasPembayaranUpdateScreen from '../screen/admin/pembayaran/KelasPembayaranUpdateScreen';
+import BuktiBayarScreen from '../screen/admin/pembayaran/BuktiBayarScreen';
 
 //screen setting: single table
 import SettingScreen from '../screen/admin/setting/SettingScreen';
@@ -141,7 +142,11 @@ export default function AdminNav() {
                   component={KelasPembayaranUpdateScreen}
                   options={{headerShown:false}}
                 />
-
+                <Stack.Screen
+                  name="BuktiBayarScreen"
+                  component={BuktiBayarScreen}
+                  options={{headerShown:false}}
+                />
 							</Stack.Navigator>
 						)}
 		        </BottomTab.Screen>

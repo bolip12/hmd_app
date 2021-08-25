@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, ScrollView, FlatList } from 'react-native';
-import { Provider as PaperProvider, Appbar, List, Portal, Modal, ActivityIndicator, Button, IconButton, Badge, Divider, Subheading} from 'react-native-paper';
+import { Provider as PaperProvider, Appbar, List, Portal, Modal, ActivityIndicator, Button, IconButton, Badge, Divider, Subheading, Caption} from 'react-native-paper';
 
 import supabase from '../../../config/supabase.js';
 import Theme from '../../../config/Theme';
@@ -54,7 +54,6 @@ class KelasPembayaranScreen extends Component {
           .eq('peserta_id', peserta_id)
           .order('tanggal', {ascending:false})
 
-
       //memasukan respon ke state untuk loop data di render
       this.setState({data:data});
 
@@ -63,6 +62,7 @@ class KelasPembayaranScreen extends Component {
           payload: { isLoading:false }
       });
   }
+
 
   render() {
       return (
@@ -80,8 +80,11 @@ class KelasPembayaranScreen extends Component {
               <View>
                 <List.Item
                   title={dateFormatSupa(item.tanggal)}
-                  description={item.keterangan}
-                  right={props => <Subheading style={{ marginTop: 10, marginRight: 10, fontWeight:'bold' }} >{thousandFormat(item.nominal)}</Subheading>}
+                  titleStyle={{fontWeight: 'bold'}}
+                  description={'Rp. '+thousandFormat(item.nominal)}
+                  descriptionStyle={{fontWeight: 'bold'}}
+                  right={() => <IconButton icon='image' size={27} onPress={() => this.props.navigation.navigate('BuktiBayarScreen', {id:item.id})} /> }
+                  /*right={props => <Subheading style={{ marginTop: 10, marginRight: 10, fontWeight:'bold' }} >{thousandFormat(item.nominal)}</Subheading>}*/
                   onPress={() => this.props.navigation.navigate('KelasPembayaranUpdateScreen', {docId:item.id})}
                 />
                 <Divider />
