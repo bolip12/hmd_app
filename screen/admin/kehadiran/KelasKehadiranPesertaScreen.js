@@ -50,7 +50,7 @@ class KelasKehadiranPesertaScreen extends Component {
           .select('peserta_id, peserta:peserta_id(nama)')
           .eq('kelas_id', kelas_id)
 
-      
+
       let listData = [];
       peserta.map(async (doc) => {
         let {data:kehadiran, error} = await supabase
@@ -82,7 +82,7 @@ class KelasKehadiranPesertaScreen extends Component {
 
   onCheck(peserta_id, status) {
     let data = this.state.data;
-    
+
     data.map(async (doc, row) => {
       if(doc.peserta_id == peserta_id) {
         data[row].status = !doc.status;
@@ -109,7 +109,7 @@ class KelasKehadiranPesertaScreen extends Component {
     data.map(async (doc) => {
       let {data:kehadiran, error} = await supabase
         .from('kelas_kehadiran_peserta')
-        .insert([{  
+        .insert([{
             peserta_id: doc.peserta_id,
             kelas_kehadiran_id: kelas_kehadiran_id,
             status: doc.status,
@@ -122,8 +122,8 @@ class KelasKehadiranPesertaScreen extends Component {
           message: 'Data berhasil disimpan',
           icon: 'success',
           type: 'success',
-        }); 
-      
+        });
+
       store.dispatch({
               type: 'LOADING',
               payload: { isLoading:false }

@@ -82,7 +82,7 @@ class KelasPesertaScreen extends Component {
       return (
         <PaperProvider theme={Theme}>
           <Appbar.Header>
-            <Appbar.Action icon="arrow-left" onPress={() => this.props.navigation.goBack()} />
+            <Appbar.Action icon="arrow-left" onPress={() => this.props.navigation.navigate('KehadiranScreen')} />
             <Appbar.Content title={this.props.route.params.kelas_nama} />
           </Appbar.Header>
 
