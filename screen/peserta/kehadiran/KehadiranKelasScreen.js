@@ -57,8 +57,7 @@ class KehadiranKelasScreen extends Component {
               .eq('peserta_id', this.state.peserta_id)
               .single();
 
-      kelas_kehadiran[row].status = kehadiran.status;
-
+      kelas_kehadiran[row].status = kehadiran != null ? kehadiran.status : null;
       this.setState({kelas_kehadiran:kelas_kehadiran});
     });
     
@@ -108,8 +107,6 @@ class KehadiranKelasScreen extends Component {
                   description={item.tanggal_kehadiran != null ? dateFormatSupa(item.tanggal_kehadiran) : '-' }
                   left={props => <Badge style={{ backgroundColor: Theme.colors.primary, margin: 10 }} size={35}>{item.pertemuan}</Badge>}
                   right={props =>  this.onRight(item)}
-                  //right={() => <IconButton icon='arrow-right-circle-outline' />}
-                  //onPress={() => this.props.navigation.navigate('KehadiranKelasScreen', {kelas_id:item.kelas_id})}
                 />
                 <Divider />
               </View>
