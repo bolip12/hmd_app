@@ -27,6 +27,8 @@ class PelatihanMateriInsertScreen extends ValidationComponent {
         
         materi: '',
         pertemuan: '',
+        materi_url: '',
+
         
       };
   }
@@ -52,7 +54,7 @@ class PelatihanMateriInsertScreen extends ValidationComponent {
       //query
       let { data, error, count } = await supabase
           .from('pelatihan_materi')
-          .select('id, materi, pertemuan')
+          .select('id, materi, pertemuan, materi_url')
           .eq('id', docId)
           .single()
           
@@ -60,6 +62,7 @@ class PelatihanMateriInsertScreen extends ValidationComponent {
         
         pertemuan:data.pertemuan,
         materi:data.materi,
+        materi_url:data.materi_url,
       });
 
       store.dispatch({
@@ -91,6 +94,7 @@ class PelatihanMateriInsertScreen extends ValidationComponent {
         .update([{  
                 pertemuan: this.state.pertemuan,
                 materi: this.state.materi,
+                materi_url: this.state.materi_url,
               }])
         .eq('id', docId)
 
@@ -199,6 +203,12 @@ class PelatihanMateriInsertScreen extends ValidationComponent {
           />
           {this.isFieldInError('materi') && this.getErrorsInField('materi').map(errorMessage => <HelperText type="error">{errorMessage}</HelperText>) }
 
+          <TextInput
+            label="Materi Url"
+            value={this.state.materi_url}
+            onChangeText={text => this.setState({materi_url:text})}
+            style={{margin:10}}
+          />
 
           <Button
               mode="contained"
